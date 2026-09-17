@@ -12,6 +12,7 @@ async function loadProfile(u){
  const {data:p,error}=await db.from("profiles").select("*").eq("id",u.id).single();
  if(error){msg("authMsg",error.message,"error");return}
  profile=p;
+ msg("authMsg","");
  $("loginPage").hidden=true;
  $("appPage").hidden=false;
  $("headerName").textContent=p.full_name;
@@ -255,12 +256,7 @@ document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{
  else
   loggedOut();
 
- db.auth.onAuthStateChange((_e,s)=>{
-  setTimeout(()=>{
-   if(s)
-    loadProfile(s.user);
-   else
-    loggedOut();
-  },0);
- });
+db.auth.onAuthStateChange((_e,s)=>{
+  if(!s) loggedOut();
+});
 })();
