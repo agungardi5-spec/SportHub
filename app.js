@@ -92,12 +92,19 @@ async function loadAdmin(){
  const by={};
  (regs||[]).forEach(r=>(by[r.event_id]??=[]).push(r));
 
- let people=0,money=0;
+let people=0,money=0,paidMoney=0,unpaidMoney=0;
 
  $("adminList").innerHTML=(events||[]).map(e=>{
   const list=by[e.id]||[];
   people+=list.length;
   money+=list.length*e.fee;
+list.forEach(r=>{
+  if(r.payment_status==="paid"){
+    paidMoney+=e.fee;
+  }else{
+    unpaidMoney+=e.fee;
+  }
+});
 
   return `<div class="event-card">
    <div class="event-top">
@@ -141,6 +148,11 @@ async function loadAdmin(){
  $("sEvents").textContent=(events||[]).length;
  $("sPeople").textContent=people;
  $("sMoney").textContent=rupiah(money);
+
+ $("financeTotal").textContent=rupiah(money);
+$("financePaid").textContent=rupiah(paidMoney);
+$("financeUnpaid").textContent=rupiah(unpaidMoney);
+$("financePeople").textContent=people;
 }
 
 window.toggleEvent=async(id,status)=>{
