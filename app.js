@@ -15,6 +15,7 @@ async function loadProfile(u){
  msg("authMsg","");
  $("loginPage").hidden=true;
  $("appPage").hidden=false;
+ $("appPage").scrollIntoView({behavior:"smooth", block:"start"});
  $("headerName").textContent=p.full_name;
 
  if(p.role==="admin"){
