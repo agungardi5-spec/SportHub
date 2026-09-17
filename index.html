@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="id"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#111827"><link rel="manifest" href="manifest.json">
+<title>SportHub</title><link rel="stylesheet" href="style.css">
+</head><body>
+<div id="loginPage" class="login-page">
+  <div class="login-card">
+    <div class="app-logo">⚽</div><h1>SportHub</h1><p>Olahraga bareng, lebih mudah.</p>
+    <input id="loginEmail" type="email" placeholder="Email">
+    <input id="loginPassword" type="password" placeholder="Password">
+    <button id="loginBtn" class="btn primary">Masuk</button>
+    <div class="line"><span>atau daftar member</span></div>
+    <input id="regName" placeholder="Nama lengkap">
+    <input id="regEmail" type="email" placeholder="Email baru">
+    <input id="regPassword" type="password" placeholder="Password minimal 6 karakter">
+    <button id="registerBtn" class="btn light">Daftar Member</button>
+    <div id="authMsg" class="message"></div>
+  </div>
+</div>
+
+<div id="appPage" hidden>
+<header class="header">
+  <div class="brand">⚽ SportHub</div>
+  <div class="account"><span id="headerName"></span><button id="logoutBtn">Keluar</button></div>
+</header>
+<main class="container">
+  <section id="memberPage" hidden>
+    <div class="welcome"><div><small>Selamat datang 👋</small><h1 id="memberName">Member</h1><p>Pilih olahraga yang ingin kamu ikuti.</p></div></div>
+    <div class="tabs"><button class="tab active" data-tab="available">Olahraga Tersedia</button><button class="tab" data-tab="mine">Olahraga Saya</button></div>
+    <div id="memberContent"></div>
+  </section>
+
+  <section id="adminPage" hidden>
+    <div class="welcome"><div><small>Panel Admin</small><h1>Dashboard</h1><p>Kelola jadwal, peserta, dan pembayaran.</p></div></div>
+    <div class="stats">
+      <div class="stat"><span>Kegiatan</span><b id="sEvents">0</b></div>
+      <div class="stat"><span>Peserta</span><b id="sPeople">0</b></div>
+      <div class="stat"><span>Total Tagihan</span><b id="sMoney">Rp0</b></div>
+    </div>
+    <div class="admin-grid">
+      <div class="card">
+        <h2>+ Buat Kegiatan</h2>
+        <div class="form-grid">
+          <input id="sportName" placeholder="Nama olahraga">
+          <input id="eventDate" type="date">
+          <input id="eventTime" type="time">
+          <input id="eventLocation" placeholder="Lokasi / lapangan">
+          <input id="eventFee" type="number" min="0" placeholder="Biaya / orang">
+          <input id="eventCapacity" type="number" min="1" placeholder="Maks peserta">
+        </div>
+        <button id="addEvent" class="btn primary">Buat Kegiatan</button><div id="adminMsg" class="message"></div>
+      </div>
+      <div id="adminList"></div>
+    </div>
+  </section>
+</main>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script><script src="app.js"></script>
+</body></html>
