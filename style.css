@@ -202,3 +202,51 @@ button {
     padding: 10px 12px;
   }
 }
+/* ===== Rekap Keuangan Admin ===== */
+.finance-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.finance-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.finance-card span {
+  font-size: 14px;
+  color: #64748b;
+}
+
+.finance-card strong {
+  font-size: 24px;
+  color: #0f172a;
+}
+
+@media (max-width: 900px) {
+  .finance-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .finance-summary {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .finance-card {
+    padding: 16px;
+  }
+
+  .finance-card strong {
+    font-size: 21px;
+  }
+}
