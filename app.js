@@ -86,6 +86,19 @@ async function loadAdmin(){
  const {data:events,error}=await db.from("sports_events").select("*").order("event_date").order("event_time");
  if(error){msg("adminMsg",error.message,"error");return}
 
+ const filter=$("financeEventFilter");
+if(filter){
+  const current=filter.value||"all";
+  filter.innerHTML='<option value="all">Semua Kegiatan</option>';
+  (events||[]).forEach(e=>{
+    const option=document.createElement("option");
+    option.value=e.id;
+    option.textContent=e.name;
+    filter.appendChild(option);
+  });
+  filter.value=(events||[]).some(e=>e.id===current)?current:"all";
+}
+
  const {data:regs,error:re}=await db.from("registrations").select("id,event_id,member_id,payment_status,profiles(full_name)");
  if(re){msg("adminMsg",re.message,"error");return}
 
@@ -153,6 +166,32 @@ list.forEach(r=>{
 $("financePaid").textContent=rupiah(paidMoney);
 $("financeUnpaid").textContent=rupiah(unpaidMoney);
 $("financePeople").textContent=people;
+
+ $("financeEventFilter").onchange=()=>{
+  const selected=$("financeEventFilter").value;
+  let total=0,paid=0,unpaid=0,peopleCount=0;
+
+  (events||[]).forEach(e=>{
+    if(selected!=="all" && e.id!==selected) return;
+
+    const list=by[e.id]||[];
+    peopleCount+=list.length;
+    total+=list.length*e.fee;
+
+    list.forEach(r=>{
+      if(r.payment_status==="paid"){
+        paid+=e.fee;
+      }else{
+        unpaid+=e.fee;
+      }
+    });
+  });
+
+  $("financeTotal").textContent=rupiah(total);
+  $("financePaid").textContent=rupiah(paid);
+  $("financeUnpaid").textContent=rupiah(unpaid);
+  $("financePeople").textContent=peopleCount;
+};
 }
 
 window.toggleEvent=async(id,status)=>{
