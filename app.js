@@ -338,3 +338,191 @@ db.auth.onAuthStateChange((_e,s)=>{
   if(!s) loggedOut();
 });
 })();
+// ================= ABSENSI =================
+
+async function loadAttendanceEvents(){
+  const select=$("attendanceEvent");
+  if(!select) return;
+
+  const {data:events,error}=await db
+    .from("sports_events")
+    .select("id,name,event_date,event_time")
+    .order("event_date")
+    .order("event_time");
+
+  if(error){
+    msg("attendanceMsg",error.message,"error");
+    return;
+  }
+
+  select.innerHTML='<option value="">-- Pilih Kegiatan --</option>';
+
+  (events||[]).forEach(e=>{
+    const option=document.createElement("option");
+    option.value=e.id;
+    option.textContent=
+      `${e.name} - ${e.event_date} ${String(e.event_time||"").slice(0,5)}`;
+    select.appendChild(option);
+  });
+}
+
+async function loadAttendance(){
+  const eventId=$("attendanceEvent").value;
+  const listEl=$("attendanceList");
+
+  if(!eventId){
+    listEl.innerHTML="";
+    msg("attendanceMsg","Pilih kegiatan terlebih dahulu.","error");
+    return;
+  }
+
+  msg("attendanceMsg","Memuat peserta...");
+
+  const {data:regs,error}=await db
+    .from("registrations")
+    .select("member_id,profiles(full_name)")
+    .eq("event_id",eventId);
+
+  if(error){
+    msg("attendanceMsg",error.message,"error");
+    return;
+  }
+
+  const {data:attendance,error:attError}=await db
+    .from("attendance")
+    .select("member_id,status,notes")
+    .eq("event_id",eventId);
+
+  if(attError){
+    msg("attendanceMsg",attError.message,"error");
+    return;
+  }
+
+  const attendanceMap=new Map(
+    (attendance||[]).map(a=>[a.member_id,a])
+  );
+
+  if(!regs||regs.length===0){
+    listEl.innerHTML="<p>Belum ada peserta pada kegiatan ini.</p>";
+    msg("attendanceMsg","");
+    return;
+  }
+
+  listEl.innerHTML=regs.map(r=>{
+    const a=attendanceMap.get(r.member_id);
+    const status=a?.status||"absent";
+
+    return `
+      <div class="attendance-row">
+        <div class="attendance-name">
+          ${esc(r.profiles?.full_name||"Peserta")}
+        </div>
+
+        <select
+          class="attendance-status"
+          data-member="${r.member_id}"
+        >
+          <option value="present" ${status==="present"?"selected":""}>
+            ✅ Hadir
+          </option>
+          <option value="absent" ${status==="absent"?"selected":""}>
+            ❌ Tidak Hadir
+          </option>
+          <option value="excused" ${status==="excused"?"selected":""}>
+            ⏰ Izin
+          </option>
+        </select>
+      </div>
+    `;
+  }).join("");
+
+  listEl.innerHTML+=`
+    <button id="saveAttendanceBtn" class="btn primary">
+      💾 Simpan Absensi
+    </button>
+  `;
+
+  $("saveAttendanceBtn").onclick=saveAttendance;
+
+  msg("attendanceMsg","Peserta berhasil dimuat.","success");
+}
+
+async function saveAttendance(){
+  const eventId=$("attendanceEvent").value;
+
+  if(!eventId) return;
+
+  const rows=document.querySelectorAll(".attendance-status");
+
+  const records=[...rows].map(row=>({
+    event_id:eventId,
+    member_id:row.dataset.member,
+    status:row.value
+  }));
+
+  if(records.length===0){
+    msg("attendanceMsg","Tidak ada peserta untuk disimpan.","error");
+    return;
+  }
+
+  const {error}=await db
+    .from("attendance")
+    .upsert(records,{
+      onConflict:"event_id,member_id"
+    });
+
+  if(error){
+    msg("attendanceMsg",error.message,"error");
+    return;
+  }
+
+  msg("attendanceMsg","Absensi berhasil disimpan!","success");
+
+  await loadAttendanceStats();
+}
+
+async function loadAttendanceStats(){
+  const {data,error}=await db
+    .from("attendance")
+    .select("status");
+
+  if(error){
+    console.error(error);
+    return;
+  }
+
+  const rows=data||[];
+
+  if(rows.length===0){
+    if($("sAttendance")) $("sAttendance").textContent="0%";
+    return;
+  }
+
+  const present=rows.filter(
+    r=>r.status==="present"
+  ).length;
+
+  const percent=Math.round(
+    (present/rows.length)*100
+  );
+
+  if($("sAttendance")){
+    $("sAttendance").textContent=percent+"%";
+  }
+}
+
+if($("loadAttendanceBtn")){
+  $("loadAttendanceBtn").onclick=loadAttendance;
+}
+
+if($("attendanceEvent")){
+  $("attendanceEvent").addEventListener("change",()=>{
+    $("attendanceList").innerHTML="";
+    msg("attendanceMsg","");
+  });
+}
+
+loadAttendanceEvents();
+loadAttendanceStats();
+
+// ================= END ABSENSI =================
