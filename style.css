@@ -1,252 +1,1389 @@
-*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:#f3f6fa;color:#111827}.header{height:68px;background:#111827;color:white;display:flex;align-items:center;justify-content:space-between;padding:0 28px}.brand{font-size:21px;font-weight:800}.account{display:flex;align-items:center;gap:15px}.account button{background:#374151;color:white;border:1px solid #4b5563;border-radius:9px;padding:8px 13px;cursor:pointer}.container{max-width:1180px;margin:auto;padding:34px 20px}.login-page{min-height:100vh;display:grid;place-items:center;padding:20px;background:linear-gradient(135deg,#eef2ff,#f8fafc)}.login-card{width:min(430px,100%);background:white;border-radius:22px;padding:32px;box-shadow:0 18px 60px #11182716}.app-logo{text-align:center;font-size:54px}.login-card h1{text-align:center;font-size:34px;margin:3px 0}.login-card>p{text-align:center;color:#64748b;margin:0 0 22px}.login-card input,.form-grid input{width:100%;border:1px solid #d1d5db;border-radius:10px;padding:12px 13px;margin:5px 0;font-size:14px;background:#fff}.btn{border:0;border-radius:10px;padding:12px 16px;font-weight:800;cursor:pointer}.btn.primary{background:#111827;color:white}.btn.light{background:#e5e7eb;color:#111827}.login-card .btn{width:100%;margin-top:8px}.line{display:flex;align-items:center;gap:10px;color:#94a3b8;font-size:12px;margin:18px 0}.line:before,.line:after{content:"";height:1px;background:#e5e7eb;flex:1}.message{min-height:20px;margin-top:10px;font-size:13px;color:#475569}.message.error{color:#b91c1c}.message.ok{color:#166534}.welcome{margin-bottom:22px}.welcome small{color:#64748b}.welcome h1{font-size:32px;margin:3px 0}.welcome p{margin:0;color:#64748b}.tabs{display:flex;gap:8px;margin-bottom:18px}.tab{border:0;background:#e5e7eb;padding:10px 15px;border-radius:999px;cursor:pointer;font-weight:700;color:#475569}.tab.active{background:#111827;color:white}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-bottom:22px}.stat{background:white;border-radius:16px;padding:20px;box-shadow:0 5px 25px #1118270a}.stat span{color:#64748b;font-size:13px}.stat b{display:block;font-size:24px;margin-top:6px}.admin-grid{display:grid;grid-template-columns:360px 1fr;gap:20px}.card,.event-card{background:white;border-radius:17px;padding:20px;box-shadow:0 5px 25px #1118270a}.card h2{margin-top:0}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}.event-card{margin-bottom:15px}.event-top{display:flex;justify-content:space-between;gap:15px}.sport-title{font-size:21px;font-weight:800;margin:0 0 7px}.event-info{color:#475569;font-size:14px;line-height:1.8}.fee{font-size:22px;font-weight:900;margin:12px 0}.event-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.event-actions .btn{margin:0}.badge{padding:5px 9px;border-radius:999px;font-size:12px;font-weight:800;background:#dcfce7;color:#166534}.badge.closed{background:#fee2e2;color:#991b1b}.participants{border-top:1px solid #e5e7eb;margin-top:15px;padding-top:12px}.person{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid #f1f5f9;font-size:14px}.pay{font-size:12px}.pay button{border:0;background:#dcfce7;color:#166534;border-radius:7px;padding:5px 8px;font-weight:700;cursor:pointer}.danger{border:0;background:#fee2e2;color:#991b1b;border-radius:8px;padding:8px 10px;font-weight:700;cursor:pointer}.empty{padding:35px;text-align:center;color:#64748b;background:white;border-radius:16px}@media(max-width:800px){.admin-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.header{padding:0 14px}.account span{display:none}.container{padding:24px 13px}.login-card{padding:25px}}\n/* ===== SportHub Mobile Responsive Upgrade ===== */
-* { box-sizing: border-box; }
-[hidden] {
-  display: none !important;
+/* =========================================================
+   SPORTS HUB V4
+   Modern Sports Community Dashboard
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
 }
-html, body {
+
+:root {
+  --navy: #123d6b;
+  --navy-dark: #08294d;
+  --blue: #1687f5;
+  --green: #21b86b;
+  --orange: #f59a23;
+  --red: #ef4d4d;
+  --purple: #7650e8;
+  --pink: #e84d91;
+  --bg: #f3f7fc;
+  --card: #ffffff;
+  --text: #102b4d;
+  --muted: #71839a;
+  --border: #e4ebf3;
+  --shadow: 0 8px 24px rgba(18, 61, 107, .08);
+}
+
+html,
+body {
   width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
   overflow-x: hidden;
 }
 
-button, input, select, textarea {
+body {
+  font-family:
+    Inter,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+
+  background: var(--bg);
+  color: var(--text);
+}
+
+button,
+input,
+select,
+textarea {
   font: inherit;
 }
 
 button {
-  min-height: 42px;
   cursor: pointer;
 }
 
-.event-card {
+[hidden] {
+  display: none !important;
+}
+
+
+/* =========================================================
+   LOGIN
+   ========================================================= */
+
+.login-page {
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+
+  background:
+    radial-gradient(circle at top left, #dceeff 0, transparent 35%),
+    linear-gradient(135deg, #f5f9ff, #eaf2fb);
+}
+
+.login-card {
+  width: min(440px, 100%);
+
+  padding: 38px;
+
+  background: white;
+
+  border: 1px solid var(--border);
+  border-radius: 24px;
+
+  box-shadow:
+    0 20px 60px rgba(18, 61, 107, .13);
+}
+
+.login-card .app-logo {
+  width: 64px;
+  height: 64px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 18px;
+
+  background: linear-gradient(
+    135deg,
+    #1687f5,
+    #123d6b
+  );
+
+  font-size: 32px;
+
+  margin-bottom: 18px;
+}
+
+.login-card h1 {
+  margin: 0 0 8px;
+
+  font-size: 30px;
+  font-weight: 800;
+
+  color: var(--navy);
+}
+
+.login-card > p {
+  margin: 0 0 26px;
+
+  color: var(--muted);
+}
+
+.login-card input {
+  width: 100%;
+
+  height: 50px;
+
+  margin-bottom: 14px;
+
+  padding: 0 16px;
+
+  border: 1px solid #d6e0ec;
+  border-radius: 12px;
+
+  background: white;
+
+  outline: none;
+
+  transition: .2s;
+}
+
+.login-card input:focus {
+  border-color: var(--blue);
+
+  box-shadow:
+    0 0 0 4px rgba(22, 135, 245, .10);
+}
+
+.line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin: 20px 0;
+
+  color: #8a99aa;
+
+  font-size: 13px;
+}
+
+.line::before,
+.line::after {
+  content: "";
+  flex: 1;
+
+  height: 1px;
+
+  background: var(--border);
+}
+
+
+/* =========================================================
+   BUTTON
+   ========================================================= */
+
+.btn {
+  min-height: 46px;
+
+  padding: 0 20px;
+
+  border: 0;
+  border-radius: 11px;
+
+  font-weight: 700;
+
+  transition: .2s;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn.primary {
+  color: white;
+
+  background:
+    linear-gradient(
+      135deg,
+      #1687f5,
+      #1268c7
+    );
+
+  box-shadow:
+    0 6px 16px rgba(22, 135, 245, .22);
+}
+
+.btn.light {
+  color: var(--navy);
+
+  background: #edf5ff;
+
+  border: 1px solid #d8e8fa;
+}
+
+.login-card .btn {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.message {
+  margin-top: 12px;
+
+  color: var(--muted);
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.sports-header {
+  height: 74px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 28px;
+
+  padding: 0 28px;
+
+  color: white;
+
+  background:
+    linear-gradient(
+      110deg,
+      #08294d,
+      #123d6b 55%,
+      #174d82
+    );
+
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.sports-brand {
+  width: 255px;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  font-size: 29px;
+}
+
+.sports-brand > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.sports-brand strong {
+  font-size: 20px;
+  letter-spacing: .3px;
+}
+
+.sports-brand small {
+  margin-top: 2px;
+
+  font-size: 11px;
+
+  color: #b9d1e8;
+}
+
+.header-search {
+  flex: 1;
+
+  max-width: 610px;
+
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 0 15px;
+
+  border-radius: 10px;
+
+  background: white;
+
+  color: #71839a;
+}
+
+.header-search input {
+  width: 100%;
+
+  border: 0;
+  outline: 0;
+
+  color: var(--text);
+
+  background: transparent;
+}
+
+.header-right {
+  margin-left: auto;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+}
+
+.header-date {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  color: #dbeafa;
+
+  font-size: 13px;
+}
+
+.profile-circle {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #52b6ff,
+      #1687f5
+    );
+
+  font-weight: 800;
+}
+
+.header-user {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 90px;
+}
+
+.header-user strong {
+  font-size: 13px;
+}
+
+.header-user small {
+  color: #b9d1e8;
+}
+
+.logout-btn {
+  min-height: 36px;
+
+  padding: 0 13px;
+
+  border: 1px solid rgba(255,255,255,.25);
+
+  border-radius: 9px;
+
+  color: white;
+
+  background: rgba(255,255,255,.08);
+}
+
+
+/* =========================================================
+   LAYOUT
+   ========================================================= */
+
+.sports-layout {
+  min-height: calc(100vh - 74px);
+
+  display: flex;
+}
+
+.sports-sidebar {
+  width: 255px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  color: white;
+
+  background:
+    linear-gradient(
+      180deg,
+      #0b3158,
+      #09294a
+    );
+
+  padding: 18px 12px;
+
+  min-height: calc(100vh - 74px);
+}
+
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+}
+
+.sidebar-item {
+  width: 100%;
+
+  min-height: 48px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 0 16px;
+
+  border: 0;
+  border-radius: 11px;
+
+  color: #d9e8f7;
+
+  background: transparent;
+
+  text-align: left;
+
+  font-size: 14px;
+
+  transition: .2s;
+}
+
+.sidebar-item:hover {
+  background: rgba(255,255,255,.08);
+
+  color: white;
+}
+
+.sidebar-item.active {
+  color: white;
+
+  background:
+    linear-gradient(
+      90deg,
+      #1687f5,
+      #146cc1
+    );
+
+  box-shadow:
+    0 6px 15px rgba(0,0,0,.15);
+}
+
+.sidebar-quote {
+  margin-top: auto;
+
+  padding: 25px 15px 10px;
+
+  color: #9fb9d2;
+
+  font-size: 15px;
+
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   MAIN
+   ========================================================= */
+
+.sports-main {
+  flex: 1;
+
+  min-width: 0;
+
+  padding: 18px;
+
   overflow: hidden;
 }
 
-.event-top {
+
+/* =========================================================
+   WELCOME BANNER
+   ========================================================= */
+
+.sports-banner {
+  min-height: 154px;
+
+  position: relative;
+
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 28px 32px;
+
+  border-radius: 16px;
+
+  color: white;
+
+  background:
+    linear-gradient(
+      100deg,
+      #0d3156 0%,
+      #155487 45%,
+      #7ba6c8 100%
+    );
+
+  box-shadow: var(--shadow);
+}
+
+.sports-banner::after {
+  content: "🏃   🚴   🏸   ⚽";
+
+  position: absolute;
+
+  right: 30px;
+  bottom: 5px;
+
+  font-size: 52px;
+
+  opacity: .22;
+
+  letter-spacing: 20px;
+}
+
+.banner-content {
+  position: relative;
+  z-index: 2;
+}
+
+.banner-content small {
+  font-size: 14px;
+
+  letter-spacing: .7px;
+}
+
+.banner-content h1 {
+  margin: 5px 0;
+
+  font-size: 38px;
+
+  line-height: 1;
+
+  font-weight: 900;
+}
+
+.banner-content p {
+  margin: 10px 0 0;
+
+  font-size: 15px;
+
+  color: #e3effa;
+}
+
+.banner-message {
+  position: relative;
+  z-index: 2;
+
+  text-align: right;
+
+  font-weight: 700;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   STATISTICS
+   ========================================================= */
+
+.sports-stats {
+  display: grid;
+
+  grid-template-columns:
+    repeat(5, minmax(0, 1fr));
+
   gap: 12px;
+
+  margin: 12px 0;
+}
+
+.sports-stat {
+  min-height: 112px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 18px;
+
+  border-radius: 14px;
+
+  color: white;
+
+  box-shadow:
+    0 8px 20px rgba(18,61,107,.12);
+
+  overflow: hidden;
+}
+
+.sports-stat.blue {
+  background:
+    linear-gradient(
+      135deg,
+      #168cf8,
+      #1470cc
+    );
+}
+
+.sports-stat.green {
+  background:
+    linear-gradient(
+      135deg,
+      #29bf75,
+      #1aa25f
+    );
+}
+
+.sports-stat.orange {
+  background:
+    linear-gradient(
+      135deg,
+      #ffab35,
+      #f18a16
+    );
+}
+
+.sports-stat.red {
+  background:
+    linear-gradient(
+      135deg,
+      #f35a5a,
+      #dc3e3e
+    );
+}
+
+.sports-stat.purple {
+  background:
+    linear-gradient(
+      135deg,
+      #8258ef,
+      #6440d1
+    );
+}
+
+.stat-icon {
+  font-size: 35px;
+
+  opacity: .95;
+}
+
+.sports-stat span,
+.sports-stat small {
+  display: block;
+
+  opacity: .92;
+}
+
+.sports-stat span {
+  font-size: 13px;
+}
+
+.sports-stat strong {
+  display: block;
+
+  margin: 5px 0;
+
+  font-size: 27px;
+
+  line-height: 1;
+}
+
+.sports-stat small {
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   DASHBOARD GRID
+   ========================================================= */
+
+.dashboard-grid {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.35fr)
+    minmax(0, 1.15fr)
+    minmax(280px, .9fr);
+
+  gap: 12px;
+
+  align-items: start;
+}
+
+.dashboard-card {
+  background: var(--card);
+
+  border: 1px solid var(--border);
+
+  border-radius: 14px;
+
+  padding: 18px;
+
+  box-shadow: var(--shadow);
+
+  min-width: 0;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
+
+  margin-bottom: 15px;
+}
+
+.card-header h2 {
+  margin: 0;
+
+  font-size: 17px;
+
+  color: var(--text);
+}
+
+.card-header > span {
+  color: var(--blue);
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+.card-header select {
+  padding: 7px 10px;
+
+  border: 1px solid var(--border);
+
+  border-radius: 8px;
+
+  background: white;
+
+  color: var(--text);
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   SPORT GRID
+   ========================================================= */
+
+.sport-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 10px;
+}
+
+.sport-box {
+  min-height: 108px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 5px;
+
+  border-radius: 11px;
+
+  text-align: center;
+
+  border: 1px solid transparent;
+}
+
+.sport-box strong {
+  font-size: 31px;
+}
+
+.sport-box b {
+  font-size: 12px;
+}
+
+.sport-box small {
+  color: #6e8195;
+
+  font-size: 10px;
+}
+
+.blue-box {
+  background: #eaf5ff;
+  border-color: #d8ecff;
+}
+
+.green-box {
+  background: #eafaf2;
+  border-color: #d8f1e4;
+}
+
+.orange-box {
+  background: #fff5e8;
+  border-color: #ffead0;
+}
+
+.red-box {
+  background: #fff0f0;
+  border-color: #ffe0e0;
+}
+
+.purple-box {
+  background: #f3efff;
+  border-color: #e9e0ff;
+}
+
+.pink-box {
+  background: #fff0f7;
+  border-color: #ffe1ef;
+}
+
+
+/* =========================================================
+   EVENT / SCHEDULE
+   ========================================================= */
+
+#adminList {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+.event-card {
+  padding: 11px;
+
+  border: 1px solid var(--border);
+
+  border-radius: 10px;
+
+  background: #fbfdff;
+}
+
+.event-card:hover {
+  border-color: #cfe2f6;
+
+  background: #f7fbff;
+}
+
+.event-top {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+}
+
+.event-top strong {
+  color: var(--text);
 }
 
 .event-actions {
   display: flex;
+
   flex-wrap: wrap;
+
+  gap: 6px;
+
+  margin-top: 8px;
+}
+
+.event-card button {
+  min-height: 32px;
+
+  padding: 0 10px;
+
+  border: 0;
+
+  border-radius: 7px;
+
+  font-size: 11px;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   PAYMENT
+   ========================================================= */
+
+.payment-circle {
+  width: 145px;
+  height: 145px;
+
+  margin: 8px auto 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    conic-gradient(
+      var(--green) 0deg,
+      var(--green) 342deg,
+      #ef5555 342deg,
+      #ef5555 360deg
+    );
+
+  position: relative;
+}
+
+.payment-circle::before {
+  content: "";
+
+  position: absolute;
+
+  width: 112px;
+  height: 112px;
+
+  border-radius: 50%;
+
+  background: white;
+}
+
+.payment-circle > div {
+  position: relative;
+
+  z-index: 2;
+
+  text-align: center;
+}
+
+.payment-circle strong {
+  display: block;
+
+  font-size: 25px;
+}
+
+.payment-circle span {
+  display: block;
+
+  margin-top: 2px;
+
+  font-size: 11px;
+
+  color: var(--muted);
+}
+
+.payment-data {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
   gap: 8px;
 }
 
-.event-actions button {
-  max-width: 100%;
+.payment-data div {
+  padding: 11px;
+
+  border-radius: 9px;
+
+  background: #f4f8fc;
 }
 
-.person {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.payment-data span {
+  display: block;
+
+  color: var(--muted);
+
+  font-size: 10px;
+}
+
+.payment-data strong {
+  display: block;
+
+  margin-top: 4px;
+
+  color: var(--text);
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   CREATE EVENT
+   ========================================================= */
+
+.create-event {
+  margin-top: 12px;
+}
+
+.form-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
   gap: 10px;
-  flex-wrap: wrap;
+
+  margin-bottom: 12px;
 }
 
-.pay {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
+.form-grid input,
+.form-grid select {
+  width: 100%;
+
+  height: 44px;
+
+  padding: 0 12px;
+
+  border: 1px solid #dbe5ef;
+
+  border-radius: 9px;
+
+  outline: none;
+
+  background: white;
 }
 
-@media (max-width: 700px) {
-  body {
-    font-size: 15px;
-  }
+.form-grid input:focus,
+.form-grid select:focus {
+  border-color: var(--blue);
 
-  .container,
-  .page,
-  main {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  header {
-    padding: 12px 14px;
-  }
-
-  h1 {
-    font-size: 24px;
-    line-height: 1.2;
-  }
-
-  h2 {
-    font-size: 20px;
-  }
-
-  h3 {
-    font-size: 17px;
-  }
-
-  .event-card {
-    padding: 14px;
-    margin-bottom: 12px;
-  }
-
-  .event-top {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .event-top .badge {
-    align-self: flex-start;
-  }
-
-  .sport-title {
-    font-size: 18px;
-    line-height: 1.3;
-  }
-
-  .event-info {
-    line-height: 1.55;
-  }
-
-  .fee {
-    font-size: 19px;
-    margin: 10px 0 6px;
-  }
-
-  .event-actions {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .event-actions button,
-  .event-actions .btn,
-  .danger {
-    width: 100%;
-  }
-
-  .participants {
-    margin-top: 14px;
-  }
-
-  .person {
-    padding: 10px 0;
-    align-items: flex-start;
-  }
-
-  .person .pay {
-    width: 100%;
-  }
-
-  .person button {
-    width: 100%;
-    margin-top: 5px;
-  }
-
-  input,
-  select,
-  textarea {
-    width: 100%;
-    min-height: 44px;
-  }
-
-  form,
-  .form-grid,
-  .grid,
-  .stats,
-  .dashboard-grid {
-    grid-template-columns: 1fr !important;
-  }
-
-  .btn,
-  button {
-    min-height: 44px;
-  }
-
-  .tabs {
-    display: flex;
-    width: 100%;
-    overflow-x: auto;
-    gap: 6px;
-    padding-bottom: 4px;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .tabs button,
-  .tab {
-    flex: 1 0 auto;
-    white-space: nowrap;
-  }
-
-  .message {
-    word-break: break-word;
-  }
+  box-shadow:
+    0 0 0 3px rgba(22,135,245,.08);
 }
 
-@media (max-width: 420px) {
-  body {
-    font-size: 14px;
-  }
 
-  h1 {
-    font-size: 21px;
-  }
+/* =========================================================
+   FINANCE SUMMARY
+   ========================================================= */
 
-  .sport-title {
-    font-size: 17px;
-  }
-
-  .fee {
-    font-size: 18px;
-  }
-
-  .event-card {
-    padding: 12px;
-  }
-
-  header {
-    padding: 10px 12px;
-  }
-}
-/* ===== Rekap Keuangan Admin ===== */
 .finance-summary {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  margin-bottom: 24px;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 12px;
+
+  margin-top: 12px;
 }
 
 .finance-card {
-  background: #ffffff;
-  border-radius: 18px;
-  padding: 20px;
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  padding: 15px;
+
+  background: white;
+
+  border: 1px solid var(--border);
+
+  border-radius: 12px;
+
+  box-shadow: var(--shadow);
 }
 
 .finance-card span {
-  font-size: 14px;
-  color: #64748b;
+  display: block;
+
+  color: var(--muted);
+
+  font-size: 12px;
 }
 
 .finance-card strong {
-  font-size: 24px;
-  color: #0f172a;
+  display: block;
+
+  margin-top: 6px;
+
+  color: var(--text);
+
+  font-size: 18px;
 }
 
-@media (max-width: 900px) {
-  .finance-summary {
-    grid-template-columns: repeat(2, 1fr);
+
+/* =========================================================
+   MEMBER PAGE
+   ========================================================= */
+
+.welcome {
+  padding: 24px;
+
+  margin-bottom: 15px;
+
+  border-radius: 14px;
+
+  color: white;
+
+  background:
+    linear-gradient(
+      110deg,
+      #123d6b,
+      #1687f5
+    );
+}
+
+.welcome small {
+  opacity: .8;
+}
+
+.welcome h1 {
+  margin: 6px 0;
+
+  font-size: 30px;
+}
+
+.welcome p {
+  margin: 0;
+
+  opacity: .9;
+}
+
+.tabs {
+  display: flex;
+
+  gap: 8px;
+
+  margin-bottom: 15px;
+}
+
+.tab {
+  padding: 10px 15px;
+
+  border: 1px solid var(--border);
+
+  border-radius: 9px;
+
+  color: var(--text);
+
+  background: white;
+
+  font-weight: 600;
+}
+
+.tab.active {
+  color: white;
+
+  border-color: var(--blue);
+
+  background: var(--blue);
+}
+
+
+/* =========================================================
+   RESPONSIVE TABLET
+   ========================================================= */
+
+@media (max-width: 1200px) {
+
+  .sports-stats {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
   }
+
+  .dashboard-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .dashboard-grid .payment-card {
+    grid-column: span 2;
+  }
+
+  .sports-sidebar {
+    width: 220px;
+  }
+
+  .sports-brand {
+    width: 210px;
+  }
+
 }
 
-@media (max-width: 520px) {
-  .finance-summary {
-    grid-template-columns: 1fr;
+
+/* =========================================================
+   RESPONSIVE MOBILE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+  .sports-header {
+    height: auto;
+
+    min-height: 68px;
+
+    padding: 12px 15px;
+
     gap: 12px;
+
+    flex-wrap: wrap;
   }
 
-  .finance-card {
-    padding: 16px;
+  .sports-brand {
+    width: auto;
+
+    flex: 1;
   }
 
-  .finance-card strong {
+  .header-search {
+    order: 3;
+
+    flex-basis: 100%;
+
+    max-width: none;
+  }
+
+  .header-date,
+  .header-user {
+    display: none;
+  }
+
+  .sports-layout {
+    display: block;
+  }
+
+  .sports-sidebar {
+    width: 100%;
+
+    min-height: auto;
+
+    padding: 8px;
+
+    position: sticky;
+
+    top: 68px;
+
+    z-index: 15;
+  }
+
+  .sidebar-menu {
+    display: flex;
+
+    flex-direction: row;
+
+    overflow-x: auto;
+
+    gap: 5px;
+  }
+
+  .sidebar-item {
+    width: auto;
+
+    min-width: max-content;
+
+    padding: 0 12px;
+
+    min-height: 40px;
+  }
+
+  .sidebar-item span {
+    font-size: 12px;
+  }
+
+  .sidebar-quote {
+    display: none;
+  }
+
+  .sports-main {
+    padding: 10px;
+  }
+
+  .sports-banner {
+    min-height: 145px;
+
+    padding: 20px;
+  }
+
+  .banner-content h1 {
+    font-size: 30px;
+  }
+
+  .banner-message {
+    display: none;
+  }
+
+  .sports-stats {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-grid .payment-card {
+    grid-column: auto;
+  }
+
+  .sport-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .finance-summary {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+/* =========================================================
+   SMALL PHONE
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+  .sports-stat {
+    min-height: 96px;
+
+    padding: 13px;
+
+    gap: 9px;
+  }
+
+  .stat-icon {
+    font-size: 27px;
+  }
+
+  .sports-stat strong {
     font-size: 21px;
   }
+
+  .sports-stat span {
+    font-size: 11px;
+  }
+
+  .sports-banner {
+    min-height: 130px;
+  }
+
+  .banner-content h1 {
+    font-size: 27px;
+  }
+
+  .dashboard-card {
+    padding: 13px;
+  }
+
+  .payment-data {
+    grid-template-columns: 1fr;
+  }
+
+  .finance-summary {
+    grid-template-columns: 1fr;
+  }
+
 }
