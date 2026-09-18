@@ -172,6 +172,13 @@ $("sMoney").textContent=rupiah(money);
 $("financePaid").textContent=rupiah(paidMoney);
 $("financeUnpaid").textContent=rupiah(unpaidMoney);
 $("financePeople").textContent=uniquePeople.size;
+ const paymentPercent=money>0
+  ? Math.round((paidMoney/money)*100)
+  : 0;
+
+if($("paymentPercent")){
+  $("paymentPercent").textContent=paymentPercent+"%";
+}
 
  $("financeEventFilter").onchange=()=>{
   const selected=$("financeEventFilter").value;
