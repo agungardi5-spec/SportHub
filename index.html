@@ -1,86 +1,589 @@
 <!doctype html>
-<html lang="id"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#111827"><link rel="manifest" href="manifest.json">
-<title>SportHub</title><link rel="stylesheet" href="style.css">
-</head><body>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#123d6b">
+  <link rel="manifest" href="manifest.json">
+  <title>Sports Hub</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- ================= LOGIN ================= -->
 <div id="loginPage" class="login-page">
+
   <div class="login-card">
-    <div class="app-logo">⚽</div><h1>SportHub</h1><p>Olahraga bareng, lebih mudah.</p>
-    <input id="loginEmail" type="email" placeholder="Email">
-    <input id="loginPassword" type="password" placeholder="Password">
-    <button id="loginBtn" class="btn primary">Masuk</button>
-    <div class="line"><span>atau daftar member</span></div>
-    <input id="regName" placeholder="Nama lengkap">
-    <input id="regEmail" type="email" placeholder="Email baru">
-    <input id="regPassword" type="password" placeholder="Password minimal 6 karakter">
-    <button id="registerBtn" class="btn light">Daftar Member</button>
-    <div id="authMsg" class="message"></div>
+
+    <div class="app-logo">🏃</div>
+
+    <h1>Sports Hub</h1>
+
+    <p>Sehat Bersama, Lebih Bahagia</p>
+
+    <input
+      id="loginEmail"
+      type="email"
+      placeholder="Email"
+    >
+
+    <input
+      id="loginPassword"
+      type="password"
+      placeholder="Password"
+    >
+
+    <button
+      id="loginBtn"
+      class="btn primary"
+    >
+      🔐 Masuk
+    </button>
+
+    <div class="line">
+      <span>atau daftar member</span>
+    </div>
+
+    <input
+      id="regName"
+      placeholder="Nama lengkap"
+    >
+
+    <input
+      id="regEmail"
+      type="email"
+      placeholder="Email baru"
+    >
+
+    <input
+      id="regPassword"
+      type="password"
+      placeholder="Password minimal 6 karakter"
+    >
+
+    <button
+      id="registerBtn"
+      class="btn light"
+    >
+      Daftar Member
+    </button>
+
+    <div
+      id="authMsg"
+      class="message"
+    ></div>
+
   </div>
+
 </div>
 
+
+<!-- ================= APP ================= -->
 <div id="appPage" hidden>
-<header class="header">
-  <div class="brand">⚽ SportHub</div>
-  <div class="account"><span id="headerName"></span><button id="logoutBtn">Keluar</button></div>
-</header>
-<main class="container">
-  <section id="memberPage" hidden>
-    <div class="welcome"><div><small>Selamat datang 👋</small><h1 id="memberName">Member</h1><p>Pilih olahraga yang ingin kamu ikuti.</p></div></div>
-    <div class="tabs"><button class="tab active" data-tab="available">Olahraga Tersedia</button><button class="tab" data-tab="mine">Olahraga Saya</button></div>
-    <div id="memberContent"></div>
-  </section>
 
-  <section id="adminPage" hidden>
+  <header class="sports-header">
 
-    <div class="finance-filter">
-  <label for="financeEventFilter">Rekap Kegiatan</label>
-  <select id="financeEventFilter">
-    <option value="all">Semua Kegiatan</option>
-  </select>
-</div>
-    <div id="financeSummary" class="finance-summary">
-  <div class="finance-card">
-    <span>Total Tagihan</span>
-    <strong id="financeTotal">Rp 0</strong>
-  </div>
-  <div class="finance-card">
-    <span>Sudah Dibayar</span>
-    <strong id="financePaid">Rp 0</strong>
-  </div>
-  <div class="finance-card">
-    <span>Belum Dibayar</span>
-    <strong id="financeUnpaid">Rp 0</strong>
-  </div>
-  <div class="finance-card">
-    <span>Total Peserta</span>
-    <strong id="financePeople">0</strong>
-  </div>
-</div>
-    <div class="welcome"><div><small>Panel Admin</small><h1>Dashboard</h1><p>Kelola jadwal, peserta, dan pembayaran.</p></div></div>
-    <div class="stats">
-      <div class="stat"><span>Kegiatan</span><b id="sEvents">0</b></div>
-      <div class="stat"><span>Peserta</span><b id="sPeople">0</b></div>
-      <div class="stat"><span>Total Tagihan</span><b id="sMoney">Rp0</b></div>
-    </div>
-    <div class="admin-grid">
-      <div class="card">
-        <h2>+ Buat Kegiatan</h2>
-        <div class="form-grid">
-          <input id="sportName" placeholder="Nama olahraga">
-          <input id="eventDate" type="date">
-          <input id="eventTime" type="time">
-          <input id="eventLocation" placeholder="Lokasi / lapangan">
-          <input id="eventFee" type="number" min="0" placeholder="Biaya / orang">
-          <input id="eventCapacity" type="number" min="1" placeholder="Maks peserta">
-        </div>
-        <button id="addEvent" class="btn primary">Buat Kegiatan</button><div id="adminMsg" class="message"></div>
+    <div class="sports-brand">
+      🏃
+      <div>
+        <strong>SPORTS HUB</strong>
+        <small>Sehat Bersama, Lebih Bahagia</small>
       </div>
-      <div id="adminList"></div>
     </div>
-  </section>
-</main>
+
+    <div class="header-search">
+      🔍
+      <input
+        placeholder="Cari peserta, olahraga, atau jadwal..."
+      >
+    </div>
+
+    <div class="header-right">
+
+      <div class="header-date">
+        📅
+        <span>Sports Community</span>
+      </div>
+
+      <div class="profile-circle">
+        AA
+      </div>
+
+      <div class="header-user">
+        <strong id="headerName"></strong>
+        <small>Admin</small>
+      </div>
+
+      <button
+        id="logoutBtn"
+        class="logout-btn"
+      >
+        Keluar
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <div class="sports-layout">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sports-sidebar">
+
+      <div class="sidebar-menu">
+
+        <button class="sidebar-item active">
+          🏠
+          <span>Dashboard</span>
+        </button>
+
+        <button class="sidebar-item">
+          👥
+          <span>Peserta</span>
+        </button>
+
+        <button class="sidebar-item">
+          💰
+          <span>Iuran & Pembayaran</span>
+        </button>
+
+        <button class="sidebar-item">
+          📅
+          <span>Jadwal Olahraga</span>
+        </button>
+
+        <button class="sidebar-item">
+          🏃
+          <span>Jenis Olahraga</span>
+        </button>
+
+        <button class="sidebar-item">
+          ✅
+          <span>Absensi</span>
+        </button>
+
+        <button class="sidebar-item">
+          💸
+          <span>Pengeluaran</span>
+        </button>
+
+        <button class="sidebar-item">
+          📊
+          <span>Laporan</span>
+        </button>
+
+        <button class="sidebar-item">
+          ⚙️
+          <span>Pengaturan</span>
+        </button>
+
+      </div>
+
+      <div class="sidebar-quote">
+        <strong>
+          "Olahraga Hari Ini,
+          Hidup Lebih Baik
+          Esok Nanti"
+        </strong>
+      </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="sports-main">
+
+      <!-- MEMBER PAGE -->
+      <section id="memberPage" hidden>
+
+        <div class="welcome">
+          <div>
+            <small>Selamat datang 👋</small>
+            <h1 id="memberName">Member</h1>
+            <p>
+              Pilih olahraga yang ingin kamu ikuti.
+            </p>
+          </div>
+        </div>
+
+        <div class="tabs">
+
+          <button
+            class="tab active"
+            data-tab="available"
+          >
+            Olahraga Tersedia
+          </button>
+
+          <button
+            class="tab"
+            data-tab="mine"
+          >
+            Olahraga Saya
+          </button>
+
+        </div>
+
+        <div id="memberContent"></div>
+
+      </section>
+
+
+      <!-- ================= ADMIN ================= -->
+
+      <section id="adminPage" hidden>
+
+        <!-- WELCOME BANNER -->
+
+        <div class="sports-banner">
+
+          <div class="banner-content">
+
+            <small>SELAMAT DATANG DI</small>
+
+            <h1>SPORTS HUB</h1>
+
+            <p>
+              Satu Komunitas, Semua Cabang Olahraga
+            </p>
+
+          </div>
+
+          <div class="banner-message">
+            "Gerakkan kecil<br>
+            membawa perubahan besar"
+          </div>
+
+        </div>
+
+
+        <!-- ================= STAT CARDS ================= -->
+
+        <div class="sports-stats">
+
+          <div class="sports-stat blue">
+
+            <div class="stat-icon">👥</div>
+
+            <div>
+              <span>Total Peserta</span>
+
+              <strong id="sPeople">0</strong>
+
+              <small>Orang</small>
+            </div>
+
+          </div>
+
+
+          <div class="sports-stat green">
+
+            <div class="stat-icon">🏋️</div>
+
+            <div>
+              <span>Jenis Olahraga</span>
+
+              <strong id="sSports">0</strong>
+
+              <small>Cabang</small>
+            </div>
+
+          </div>
+
+
+          <div class="sports-stat orange">
+
+            <div class="stat-icon">📅</div>
+
+            <div>
+              <span>Jadwal Bulan Ini</span>
+
+              <strong id="sEvents">0</strong>
+
+              <small>Kegiatan</small>
+            </div>
+
+          </div>
+
+
+          <div class="sports-stat red">
+
+            <div class="stat-icon">💳</div>
+
+            <div>
+              <span>Total Iuran</span>
+
+              <strong id="sMoney">Rp0</strong>
+
+              <small>Bulan Ini</small>
+            </div>
+
+          </div>
+
+
+          <div class="sports-stat purple">
+
+            <div class="stat-icon">✅</div>
+
+            <div>
+              <span>Kehadiran</span>
+
+              <strong id="sAttendance">0%</strong>
+
+              <small>Rata-rata</small>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- ================= CONTENT GRID ================= -->
+
+        <div class="dashboard-grid">
+
+
+          <!-- JENIS OLAHRAGA -->
+
+          <div class="dashboard-card">
+
+            <div class="card-header">
+
+              <h2>Jenis Olahraga</h2>
+
+              <span>Lihat Semua</span>
+
+            </div>
+
+            <div class="sport-grid">
+
+              <div class="sport-box blue-box">
+                <strong>🏃</strong>
+                <b>Lari</b>
+                <small>Peserta</small>
+              </div>
+
+              <div class="sport-box green-box">
+                <strong>🚴</strong>
+                <b>Sepeda</b>
+                <small>Peserta</small>
+              </div>
+
+              <div class="sport-box orange-box">
+                <strong>🏸</strong>
+                <b>Badminton</b>
+                <small>Peserta</small>
+              </div>
+
+              <div class="sport-box red-box">
+                <strong>⚽</strong>
+                <b>Futsal</b>
+                <small>Peserta</small>
+              </div>
+
+              <div class="sport-box purple-box">
+                <strong>🏋️</strong>
+                <b>Gym</b>
+                <small>Peserta</small>
+              </div>
+
+              <div class="sport-box orange-box">
+                <strong>🏀</strong>
+                <b>Basket</b>
+                <small>Peserta</small>
+              </div>
+
+              <div class="sport-box green-box">
+                <strong>🎾</strong>
+                <b>Tenis</b>
+                <small>Peserta</small>
+              </div>
+
+              <div class="sport-box pink-box">
+                <strong>🧘</strong>
+                <b>Yoga</b>
+                <small>Peserta</small>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- JADWAL -->
+
+          <div class="dashboard-card">
+
+            <div class="card-header">
+
+              <h2>Jadwal Olahraga Terdekat</h2>
+
+              <span>Lihat Semua</span>
+
+            </div>
+
+            <div id="adminList"></div>
+
+          </div>
+
+
+          <!-- PEMBAYARAN -->
+
+          <div class="dashboard-card payment-card">
+
+            <div class="card-header">
+
+              <h2>Pembayaran Iuran</h2>
+
+              <select id="financeEventFilter">
+                <option value="all">
+                  Semua Kegiatan
+                </option>
+              </select>
+
+            </div>
+
+            <div class="payment-circle">
+
+              <div>
+                <strong id="paymentPercent">
+                  0%
+                </strong>
+
+                <span>Terkumpul</span>
+              </div>
+
+            </div>
+
+            <div class="payment-data">
+
+              <div>
+                <span>Total Tagihan</span>
+                <strong id="financeTotal">
+                  Rp 0
+                </strong>
+              </div>
+
+              <div>
+                <span>Sudah Dibayar</span>
+                <strong id="financePaid">
+                  Rp 0
+                </strong>
+              </div>
+
+              <div>
+                <span>Belum Dibayar</span>
+                <strong id="financeUnpaid">
+                  Rp 0
+                </strong>
+              </div>
+
+              <div>
+                <span>Total Peserta</span>
+                <strong id="financePeople">
+                  0
+                </strong>
+              </div>
+
+            </div>
+
+          </div>
+
+
+        </div>
+
+
+        <!-- ================= CREATE EVENT ================= -->
+
+        <div class="dashboard-card create-event">
+
+          <div class="card-header">
+
+            <h2>📅 Buat Jadwal Olahraga</h2>
+
+          </div>
+
+          <div class="form-grid">
+
+            <input
+              id="sportName"
+              placeholder="Nama olahraga"
+            >
+
+            <input
+              id="eventDate"
+              type="date"
+            >
+
+            <input
+              id="eventTime"
+              type="time"
+            >
+
+            <input
+              id="eventLocation"
+              placeholder="Lokasi / lapangan"
+            >
+
+            <input
+              id="eventFee"
+              type="number"
+              min="0"
+              placeholder="Biaya / orang"
+            >
+
+            <input
+              id="eventCapacity"
+              type="number"
+              min="1"
+              placeholder="Maks peserta"
+            >
+
+          </div>
+
+          <button
+            id="addEvent"
+            class="btn primary"
+          >
+            + Buat Kegiatan
+          </button>
+
+          <div
+            id="adminMsg"
+            class="message"
+          ></div>
+
+        </div>
+
+
+        <!-- ================= FINANCE SUMMARY ================= -->
+
+        <div
+          id="financeSummary"
+          class="finance-summary"
+        ></div>
+
+
+      </section>
+
+    </main>
+
+  </div>
+
 </div>
+
+
+<!-- SUPABASE -->
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js"></script><script src="app.js"></script>
-</body></html>
+
+<script src="config.js"></script>
+
+<script src="app.js"></script>
+
+</body>
+</html>
