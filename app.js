@@ -635,3 +635,77 @@ showAdminSection(
 
 
 // ================= END NAVIGASI SIDEBAR =================
+// ================= PESERTA =================
+
+async function loadParticipants(){
+
+  const list = $("participantsList");
+  const message = $("participantsMsg");
+
+  if(!list) return;
+
+  list.innerHTML = "";
+  msg("participantsMsg","Memuat peserta...");
+
+  const {data,error}=await db
+    .from("profiles")
+    .select("id,full_name,email")
+    .order("full_name");
+
+  if(error){
+    msg("participantsMsg",error.message,"error");
+    return;
+  }
+
+  if(!data || data.length===0){
+    list.innerHTML = `
+      <tr>
+        <td colspan="3">Belum ada peserta.</td>
+      </tr>
+    `;
+    msg("participantsMsg","");
+    return;
+  }
+
+  list.innerHTML=data.map((p,index)=>`
+    <tr>
+      <td>${index+1}</td>
+      <td>${esc(p.full_name||"-")}</td>
+      <td>${esc(p.email||"-")}</td>
+    </tr>
+  `).join("");
+
+  msg("participantsMsg","");
+}
+
+
+// ================= MENU PESERTA =================
+
+if($("participantsBtn")){
+  $("participantsBtn").onclick=()=>{
+
+    showAdminSection(
+      "participants",
+      "participantsBtn"
+    );
+
+    const dashboard = $("adminPage");
+
+    if(dashboard){
+
+      [...dashboard.children].forEach(el=>{
+        el.style.display="none";
+      });
+
+      const participants=$("participantsSection");
+
+      if(participants){
+        participants.style.display="block";
+      }
+    }
+
+    loadParticipants();
+  };
+}
+
+// ================= END PESERTA =================
