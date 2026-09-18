@@ -526,3 +526,17 @@ loadAttendanceEvents();
 loadAttendanceStats();
 
 // ================= END ABSENSI =================
+if($("attendanceBtn")){
+  $("attendanceBtn").onclick=()=>{
+    const section=$("attendanceSection");
+
+    if(section){
+      section.scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+      });
+
+      loadAttendanceEvents();
+    }
+  };
+}
