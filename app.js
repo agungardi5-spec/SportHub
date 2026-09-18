@@ -531,6 +531,7 @@ if($("attendanceBtn")){
     const section=$("attendanceSection");
 
     if(section){
+      section.style.display="block";
       section.scrollIntoView({
         behavior:"smooth",
         block:"start"
