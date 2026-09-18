@@ -106,12 +106,17 @@ if(filter){
  (regs||[]).forEach(r=>(by[r.event_id]??=[]).push(r));
 
 let people=0,money=0,paidMoney=0,unpaidMoney=0;
+ const uniquePeople=new Set();
+const uniqueSports=new Set();
 
  $("adminList").innerHTML=(events||[]).map(e=>{
   const list=by[e.id]||[];
+  uniqueSports.add(e.name);
   people+=list.length;
   money+=list.length*e.fee;
 list.forEach(r=>{
+ uniquePeople.add(r.member_id);
+ 
   if(r.payment_status==="paid"){
     paidMoney+=e.fee;
   }else{
@@ -158,25 +163,31 @@ list.forEach(r=>{
   </div>`
  }).join("")||`<div class="empty">Belum ada kegiatan.</div>`;
 
- $("sEvents").textContent=(events||[]).length;
- $("sPeople").textContent=people;
- $("sMoney").textContent=rupiah(money);
-
+$("sEvents").textContent=(events||[]).length;
+$("sPeople").textContent=uniquePeople.size;
+$("sSports").textContent=uniqueSports.size;
+$("sMoney").textContent=rupiah(money);
+ 
  $("financeTotal").textContent=rupiah(money);
 $("financePaid").textContent=rupiah(paidMoney);
 $("financeUnpaid").textContent=rupiah(unpaidMoney);
-$("financePeople").textContent=people;
+$("financePeople").textContent=uniquePeople.size;
 
  $("financeEventFilter").onchange=()=>{
   const selected=$("financeEventFilter").value;
-  let total=0,paid=0,unpaid=0,peopleCount=0;
+let total=0,paid=0,unpaid=0;
+const selectedPeople=new Set();
 
   (events||[]).forEach(e=>{
     if(selected!=="all" && e.id!==selected) return;
 
     const list=by[e.id]||[];
-    peopleCount+=list.length;
-    total+=list.length*e.fee;
+
+list.forEach(r=>{
+  selectedPeople.add(r.member_id);
+});
+
+total+=list.length*e.fee;
 
     list.forEach(r=>{
       if(r.payment_status==="paid"){
@@ -190,7 +201,15 @@ $("financePeople").textContent=people;
   $("financeTotal").textContent=rupiah(total);
   $("financePaid").textContent=rupiah(paid);
   $("financeUnpaid").textContent=rupiah(unpaid);
-  $("financePeople").textContent=peopleCount;
+  $("financePeople").textContent=selectedPeople.size;
+
+  const paymentPercent=total>0
+  ? Math.round((paid/total)*100)
+  : 0;
+
+if($("paymentPercent")){
+  $("paymentPercent").textContent=paymentPercent+"%";
+}
 };
 }
 
