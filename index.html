@@ -566,6 +566,43 @@
           id="financeSummary"
           class="finance-summary"
         ></div>
+        <!-- ================= ABSENSI ================= -->
+
+<div id="attendanceSection" class="attendance-section">
+
+  <div class="section-header">
+    <div>
+      <h2>📋 Absensi Peserta</h2>
+      <p>Kelola kehadiran peserta berdasarkan kegiatan olahraga.</p>
+    </div>
+  </div>
+
+  <div class="attendance-filter">
+
+    <label for="attendanceEvent">
+      Pilih Kegiatan
+    </label>
+
+    <select id="attendanceEvent">
+      <option value="">-- Pilih Kegiatan --</option>
+    </select>
+
+    <button
+      id="loadAttendanceBtn"
+      class="btn primary"
+    >
+      Tampilkan Peserta
+    </button>
+
+  </div>
+
+  <div id="attendanceMsg" class="message"></div>
+
+  <div id="attendanceList" class="attendance-list"></div>
+
+</div>
+
+<!-- ================= END ABSENSI ================= -->
 
 
       </section>
