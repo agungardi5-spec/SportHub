@@ -541,3 +541,97 @@ if($("attendanceBtn")){
     }
   };
 }
+// ================= NAVIGASI SIDEBAR =================
+
+function showAdminSection(sectionId, buttonId){
+
+  const dashboard = $("adminPage");
+
+  if(!dashboard) return;
+
+  // Semua bagian langsung di dalam adminPage
+  const sections = [...dashboard.children];
+
+  // ================= DASHBOARD =================
+
+  if(sectionId === "dashboard"){
+
+    sections.forEach(el=>{
+      el.style.display = "";
+    });
+
+    // Absensi tidak tampil di Dashboard
+    const attendance = $("attendanceSection");
+
+    if(attendance){
+      attendance.style.display = "none";
+    }
+  }
+
+  // ================= ABSENSI =================
+
+  if(sectionId === "attendance"){
+
+    // Sembunyikan seluruh isi dashboard
+    sections.forEach(el=>{
+      el.style.display = "none";
+    });
+
+    // Tampilkan hanya Absensi
+    const attendance = $("attendanceSection");
+
+    if(attendance){
+      attendance.style.display = "block";
+    }
+
+    // Muat kegiatan
+    loadAttendanceEvents();
+  }
+
+  // ================= MENU AKTIF =================
+
+  document.querySelectorAll(".sidebar-item").forEach(btn=>{
+    btn.classList.remove("active");
+  });
+
+  const activeButton = $(buttonId);
+
+  if(activeButton){
+    activeButton.classList.add("active");
+  }
+
+}
+
+
+// ================= DASHBOARD =================
+
+if($("dashboardBtn")){
+  $("dashboardBtn").onclick=()=>{
+    showAdminSection(
+      "dashboard",
+      "dashboardBtn"
+    );
+  };
+}
+
+
+// ================= ABSENSI =================
+
+if($("attendanceBtn")){
+  $("attendanceBtn").onclick=()=>{
+    showAdminSection(
+      "attendance",
+      "attendanceBtn"
+    );
+  };
+}
+
+
+// Tampilkan Dashboard saat pertama kali
+showAdminSection(
+  "dashboard",
+  "dashboardBtn"
+);
+
+
+// ================= END NAVIGASI SIDEBAR =================
