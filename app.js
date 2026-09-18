@@ -649,7 +649,7 @@ async function loadParticipants(){
 
   const {data,error}=await db
     .from("profiles")
-    .select("id,full_name,email")
+    .select("id,full_name")
     .order("full_name");
 
   if(error){
@@ -671,7 +671,6 @@ async function loadParticipants(){
     <tr>
       <td>${index+1}</td>
       <td>${esc(p.full_name||"-")}</td>
-      <td>${esc(p.email||"-")}</td>
     </tr>
   `).join("");
 
