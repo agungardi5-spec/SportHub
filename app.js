@@ -748,12 +748,12 @@ function loadSports(){
   ];
 
   list.innerHTML = sports.map(s => `
-    <div class="sport-card">
-      <div class="sport-icon">${s.icon}</div>
-      <strong>${s.name}</strong>
-      <small>Jenis Olahraga</small>
-    </div>
-  `).join("");
+  <div class="sport-box">
+    <strong>${s.icon}</strong>
+    <b>${s.name}</b>
+    <small>Jenis Olahraga</small>
+  </div>
+`).join("");
 }
 // ================= NAVIGASI ADMIN =================
 
