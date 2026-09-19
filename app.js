@@ -615,9 +615,12 @@ if($("attendanceEvent")){
     msg("attendanceMsg","");
   });
 }
-
+if($("addExpense")){
+  $("addExpense").onclick=addExpense;
+}
 loadAttendanceEvents();
 loadAttendanceStats();
+loadExpenses();
 
 // ================= END ABSENSI =================
 
@@ -898,7 +901,107 @@ async function loadPayments(){
     msg("paymentsMsg","");
     return;
   }
+async function loadExpenses(){
 
+  const list=$("expenseList");
+
+  if(!list) return;
+
+  msg("expenseMsg","Memuat data pengeluaran...");
+
+  const {data,error}=await db
+    .from("expenses")
+    .select("id,expense_name,expense_date,amount,notes")
+    .order("expense_date",{ascending:false})
+    .order("id",{ascending:false});
+
+  if(error){
+    msg("expenseMsg",error.message,"error");
+    return;
+  }
+
+  let total=0;
+
+  if(!data || data.length===0){
+
+    list.innerHTML=`
+      <tr>
+        <td colspan="5">Belum ada data pengeluaran.</td>
+      </tr>
+    `;
+
+    $("expenseTotal").textContent=rupiah(0);
+    msg("expenseMsg","");
+    return;
+  }
+
+  list.innerHTML=data.map((e,index)=>{
+
+    const amount=Number(e.amount||0);
+
+    total+=amount;
+
+    return `
+      <tr>
+        <td>${index+1}</td>
+        <td>${e.expense_date||"-"}</td>
+        <td>${esc(e.expense_name||"-")}</td>
+        <td>${rupiah(amount)}</td>
+        <td>${esc(e.notes||"-")}</td>
+      </tr>
+    `;
+
+  }).join("");
+
+  $("expenseTotal").textContent=rupiah(total);
+
+  msg("expenseMsg","");
+}
+ async function addExpense(){
+
+  const name=$("expenseName").value.trim();
+  const date=$("expenseDate").value;
+  const amount=Number($("expenseAmount").value||0);
+  const notes=$("expenseNote").value.trim();
+
+  if(!name || !date || amount<=0){
+    msg(
+      "expenseMsg",
+      "Nama, tanggal, dan nominal wajib diisi.",
+      "error"
+    );
+    return;
+  }
+
+  msg("expenseMsg","Menyimpan pengeluaran...");
+
+  const {error}=await db
+    .from("expenses")
+    .insert({
+      expense_name:name,
+      expense_date:date,
+      amount:amount,
+      notes:notes
+    });
+
+  if(error){
+    msg("expenseMsg",error.message,"error");
+    return;
+  }
+
+  $("expenseName").value="";
+  $("expenseDate").value="";
+  $("expenseAmount").value="";
+  $("expenseNote").value="";
+
+  msg(
+    "expenseMsg",
+    "Pengeluaran berhasil ditambahkan.",
+    "success"
+  );
+
+  await loadExpenses();
+}
   list.innerHTML=regs.map((r,index)=>{
 
     const fee=Number(r.sports_events?.fee||0);
