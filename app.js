@@ -197,27 +197,54 @@ list.forEach(r=>{
       </button>
 
       <div style="margin-top:8px;font-size:13px;">
-        <b>Peserta:</b>
-        ${
-          list.length
-          ? list.map(r=>`
-              <div>
-                ${esc(r.profiles?.full_name||"Member")}
-                ${
-                  r.payment_status==="paid"
-                  ? "✅"
-                  : `⏳
-                    <button
-                      class="btn light"
-                      onclick="paid('${r.id}')">
-                      Tandai Bayar
-                    </button>`
-                }
-              </div>
-            `).join("")
-          : "Belum ada peserta"
-        }
-      </div>
+
+  <button
+    class="btn light"
+    onclick="toggleParticipants('${e.id}')">
+    👥 Kelola
+  </button>
+
+  <div style="margin-top:8px;font-size:13px;">
+
+  <button
+    class="btn light"
+    onclick="toggleParticipants('${e.id}')">
+    👥 Kelola
+  </button>
+
+  <div
+    id="participants-${e.id}"
+    style="display:none;margin-top:8px;"
+  >
+
+    <b>Peserta:</b>
+
+    ${
+      list.length
+      ? list.map(r=>`
+          <div style="margin-top:4px;">
+            ${esc(r.profiles?.full_name||"Member")}
+
+            ${
+              r.payment_status==="paid"
+              ? " ✅"
+              : ` ⏳
+                <button
+                  class="btn light"
+                  onclick="paid('${r.id}')">
+                  Tandai Bayar
+                </button>`
+            }
+
+          </div>
+        `).join("")
+      : "Belum ada peserta"
+    }
+
+  </div>
+
+</div>
+</div>
 
     </div>
 
@@ -291,6 +318,16 @@ window.paid=async id=>{
  const {error}=await db.from("registrations").update({payment_status:"paid"}).eq("id",id);
  if(error)alert(error.message);
  else loadAdmin();
+};
+window.toggleParticipants=function(id){
+  const el=document.getElementById("participants-"+id);
+
+  if(!el) return;
+
+  el.style.display =
+    el.style.display==="none"
+      ? "block"
+      : "none";
 };
 
 window.deleteEvent=async id=>{
