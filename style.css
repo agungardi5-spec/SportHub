@@ -713,10 +713,9 @@ button {
 
 .dashboard-grid {
   display: grid;
-
   grid-template-columns:
-    minmax(0, 1.35fr)
     minmax(0, 1.15fr)
+    minmax(0, 1.35fr)
     minmax(280px, .9fr);
 
   gap: 12px;
