@@ -697,7 +697,8 @@ function showAdminSection(sectionId, buttonId){
     "paymentsSection",
     "attendanceSection",
    "expenseSection",
-   "reportSection"
+   "reportSection",
+   "scheduleSection"
   ];
 
   // Sembunyikan semua bagian
