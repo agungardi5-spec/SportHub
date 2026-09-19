@@ -1656,3 +1656,79 @@ button {
   }
 
 }
+/* ================= IURAN & PEMBAYARAN ================= */
+
+#paymentsSection {
+  padding: 26px;
+}
+
+#paymentsSection .section-header h2 {
+  font-size: 28px;
+  margin-bottom: 6px;
+  color: #123d6b;
+}
+
+#paymentsSection .section-header p {
+  color: #64748b;
+  margin-bottom: 24px;
+}
+
+#paymentsSection .payments-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+#paymentsSection .payments-summary > div {
+  background: #ffffff;
+  border: 1px solid #e3ebf5;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 14px rgba(18,61,107,.06);
+}
+
+#paymentsSection .payments-summary span {
+  display: block;
+  color: #64748b;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+#paymentsSection .payments-summary strong {
+  display: block;
+  color: #123d6b;
+  font-size: 24px;
+}
+
+#paymentsSection .payments-card {
+  background: #ffffff;
+  border: 1px solid #e3ebf5;
+  border-radius: 16px;
+  padding: 8px;
+  box-shadow: 0 4px 14px rgba(18,61,107,.06);
+  overflow-x: auto;
+}
+
+#paymentsSection .payments-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#paymentsSection .payments-table th {
+  background: #f4f8fc;
+  color: #123d6b;
+  text-align: left;
+  padding: 14px;
+  font-size: 13px;
+}
+
+#paymentsSection .payments-table td {
+  padding: 14px;
+  border-top: 1px solid #edf2f7;
+  font-size: 14px;
+}
+
+#paymentsSection .payments-table tbody tr:hover {
+  background: #f8fbff;
+}
