@@ -1780,3 +1780,57 @@ button {
 #participantsSection .participants-table tbody tr:hover {
   background: #f8fbff;
 }
+/* ================= ABSENSI ================= */
+
+#attendanceSection {
+  padding: 26px;
+}
+
+#attendanceSection .section-header h2 {
+  font-size: 28px;
+  color: #123d6b;
+  margin-bottom: 6px;
+}
+
+#attendanceSection .section-header p {
+  color: #64748b;
+  margin-bottom: 24px;
+}
+
+#attendanceSection .attendance-filter {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 18px;
+  background: #ffffff;
+  border: 1px solid #e3ebf5;
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(18,61,107,.06);
+}
+
+#attendanceSection .attendance-filter label {
+  font-weight: 600;
+  color: #123d6b;
+}
+
+#attendanceSection .attendance-filter select {
+  min-width: 280px;
+  padding: 12px 14px;
+  border: 1px solid #d8e3ef;
+  border-radius: 10px;
+  background: #ffffff;
+  font-size: 14px;
+}
+
+#attendanceSection .attendance-filter .btn {
+  min-height: 44px;
+}
+
+#attendanceSection #attendanceList {
+  background: #ffffff;
+  border: 1px solid #e3ebf5;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 14px rgba(18,61,107,.06);
+}
