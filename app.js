@@ -972,53 +972,90 @@ msg("paymentsMsg","");
 
 async function loadReport(){
 
+  const monthInput = $("reportMonth");
+
+  if(monthInput && !monthInput.value){
+    const now = new Date();
+    const month = String(now.getMonth() + 1).padStart(2,"0");
+    monthInput.value = `${now.getFullYear()}-${month}`;
+  }
+
+  const selectedMonth = monthInput?.value || "";
 
   // ================= PEMASUKAN =================
-
-  const {data:regs,error:regError}=await db
+  const {data:regs,error:regError} = await db
     .from("registrations")
-    .select("payment_status,sports_events(fee)");
+    .select("payment_status,sports_events(fee,event_date)");
 
   if(regError){
-    msg("expenseMsg",regError.message,"error");
+    console.error(regError);
     return;
   }
 
-  let income=0;
+  let income = 0;
 
-  (regs||[]).forEach(r=>{
-    const fee=Number(r.sports_events?.fee||0);
+  (regs || []).forEach(r => {
 
-    if(r.payment_status==="paid"){
-      income+=fee;
+    const eventDate = r.sports_events?.event_date || "";
+    const fee = Number(r.sports_events?.fee || 0);
+
+    if(
+      r.payment_status === "paid" &&
+      (!selectedMonth || eventDate.startsWith(selectedMonth))
+    ){
+      income += fee;
     }
-  });
 
+  });
 
   // ================= PENGELUARAN =================
-
-  const {data:expenses,error:expenseError}=await db
+  const {data:expenses,error:expenseError} = await db
     .from("expenses")
-    .select("amount");
+    .select("amount,expense_date");
 
   if(expenseError){
-    msg("expenseMsg",expenseError.message,"error");
+    console.error(expenseError);
     return;
   }
 
-  let expense=0;
+  let expense = 0;
 
-  (expenses||[]).forEach(e=>{
-    expense+=Number(e.amount||0);
+  (expenses || []).forEach(e => {
+
+    const expenseDate = e.expense_date || "";
+
+    if(
+      !selectedMonth ||
+      expenseDate.startsWith(selectedMonth)
+    ){
+      expense += Number(e.amount || 0);
+    }
+
   });
 
-
   // ================= SALDO =================
+  const balance = income - expense;
 
-  const balance=income-expense;
+  $("reportIncome").textContent = rupiah(income);
+  $("reportExpense").textContent = rupiah(expense);
+  $("reportBalance").textContent = rupiah(balance);
 
-
-  // ================= TAMPILKAN =================
+  $("reportSummary").innerHTML = `
+    <tr>
+      <td>Total Iuran Dibayar</td>
+      <td>${rupiah(income)}</td>
+    </tr>
+    <tr>
+      <td>Total Pengeluaran</td>
+      <td>${rupiah(expense)}</td>
+    </tr>
+    <tr>
+      <td><strong>Saldo</strong></td>
+      <td><strong>${rupiah(balance)}</strong></td>
+    </tr>
+  `;
+}
+// ================= TAMPILKAN =================
 
   $("reportIncome").textContent=rupiah(income);
   $("reportExpense").textContent=rupiah(expense);
