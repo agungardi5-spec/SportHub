@@ -876,6 +876,28 @@ button {
 
   background: #fbfdff;
 }
+/* ================= JADWAL OLAHRAGA ADMIN ================= */
+
+#adminList .event-card {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 16px 18px !important;
+  border-radius: 12px;
+  margin-bottom: 12px;
+
+  display: grid !important;
+  grid-template-columns:
+    1.2fr
+    1fr
+    1.3fr
+    .8fr
+    .8fr
+    1fr
+    1.5fr !important;
+
+  gap: 14px !important;
+  align-items: start !important;
+}
 
 .event-card:hover {
   border-color: #cfe2f6;
