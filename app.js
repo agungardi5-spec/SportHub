@@ -728,7 +728,33 @@ async function loadParticipants(){
 
   msg("participantsMsg","");
 }
+// ================= JENIS OLAHRAGA =================
 
+function loadSports(){
+
+  const list = $("sportsList");
+
+  if(!list) return;
+
+  const sports = [
+    {name:"Lari", icon:"🏃"},
+    {name:"Sepeda", icon:"🚴"},
+    {name:"Badminton", icon:"🏸"},
+    {name:"Futsal", icon:"⚽"},
+    {name:"Gym", icon:"🏋️"},
+    {name:"Basket", icon:"🏀"},
+    {name:"Tenis", icon:"🎾"},
+    {name:"Yoga", icon:"🧘"}
+  ];
+
+  list.innerHTML = sports.map(s => `
+    <div class="sport-card">
+      <div class="sport-icon">${s.icon}</div>
+      <strong>${s.name}</strong>
+      <small>Jenis Olahraga</small>
+    </div>
+  `).join("");
+}
 // ================= NAVIGASI ADMIN =================
 
 function showAdminSection(sectionId, buttonId){
@@ -861,6 +887,8 @@ if(sectionId === "sports"){
   if(sports){
     sports.style.display = "block";
   }
+
+  loadSports();
 }
   // ================= ACTIVE SIDEBAR =================
 
