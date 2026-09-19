@@ -1043,9 +1043,9 @@ async function loadReport(){
   `;
 }
 if($("reportMonth")){
-  $("reportMonth").addEventListener("change",()=>{
+  $("reportMonth").onchange=function(){
     loadReport();
-  });
+  };
 }
 async function loadExpenses(){
 
