@@ -334,6 +334,21 @@ window.deleteEvent=async id=>{
  if(error)alert(error.message);
  else loadAdmin();
 };
+window.deleteExpense=async id=>{
+  if(!confirm("Hapus pengeluaran ini?")) return;
+
+  const {error}=await db
+    .from("expenses")
+    .delete()
+    .eq("id",id);
+
+  if(error){
+    alert(error.message);
+    return;
+  }
+
+  loadExpenses();
+};
 
 $("loginBtn").onclick=async()=>{
  const email=$("loginEmail").value.trim();
@@ -984,6 +999,19 @@ async function loadExpenses(){
         <td>${esc(e.expense_name||"-")}</td>
         <td>${rupiah(amount)}</td>
         <td>${esc(e.notes||"-")}</td>
+        <td>
+  <button
+    class="btn light"
+    onclick="editExpense('${e.id}')">
+    ✏️ Edit
+  </button>
+
+  <button
+    class="danger"
+    onclick="deleteExpense('${e.id}')">
+    🗑️ Hapus
+  </button>
+</td>
       </tr>
     `;
 
@@ -995,7 +1023,55 @@ async function loadExpenses(){
 }
 
 async function addExpense(){
+if(window.editingExpenseId){
 
+  const id=window.editingExpenseId;
+
+  const name=$("expenseName").value.trim();
+  const date=$("expenseDate").value;
+  const amount=Number($("expenseAmount").value||0);
+  const notes=$("expenseNote").value.trim();
+
+  if(!name || !date || amount<=0){
+    msg(
+      "expenseMsg",
+      "Nama, tanggal, dan nominal wajib diisi.",
+      "error"
+    );
+    return;
+  }
+
+  const {error}=await db
+    .from("expenses")
+    .update({
+      expense_name:name,
+      expense_date:date,
+      amount:amount,
+      notes:notes
+    })
+    .eq("id",id);
+
+  if(error){
+    msg("expenseMsg",error.message,"error");
+    return;
+  }
+
+  window.editingExpenseId=null;
+
+  $("expenseName").value="";
+  $("expenseDate").value="";
+  $("expenseAmount").value="";
+  $("expenseNote").value="";
+
+  msg(
+    "expenseMsg",
+    "Pengeluaran berhasil diperbarui.",
+    "success"
+  );
+
+  await loadExpenses();
+  return;
+}
   const name=$("expenseName").value.trim();
   const date=$("expenseDate").value;
   const amount=Number($("expenseAmount").value||0);
@@ -1039,7 +1115,28 @@ async function addExpense(){
 
   await loadExpenses();
 }
+async function editExpense(id){
 
+  const {data,error}=await db
+    .from("expenses")
+    .select("expense_name,expense_date,amount,notes")
+    .eq("id",id)
+    .single();
+
+  if(error){
+    alert(error.message);
+    return;
+  }
+
+  $("expenseName").value=data.expense_name||"";
+  $("expenseDate").value=data.expense_date||"";
+  $("expenseAmount").value=data.amount||"";
+  $("expenseNote").value=data.notes||"";
+
+  window.editingExpenseId=id;
+
+  $("expenseMsg").textContent="Mode edit aktif. Ubah data lalu klik Tambah Pengeluaran.";
+}
 
 // ================= MENU IURAN =================
 
