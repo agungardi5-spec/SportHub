@@ -707,7 +707,85 @@
 </div>
 
 <!-- ================= END ABSENSI ================= -->
+<!-- ================= PENGELUARAN ================= -->
 
+<div id="expenseSection" class="expense-section" style="display:none;">
+
+  <div class="section-header">
+    <div>
+      <h2>💸 Pengeluaran</h2>
+      <p>Kelola seluruh pengeluaran kegiatan Sports Hub.</p>
+    </div>
+  </div>
+
+  <div id="expenseMsg" class="message"></div>
+
+  <div class="payments-summary">
+    <div>
+      <span>Total Pengeluaran</span>
+      <strong id="expenseTotal">Rp 0</strong>
+    </div>
+  </div>
+
+  <div class="payments-card">
+
+    <div class="form-grid">
+
+      <input
+        id="expenseName"
+        type="text"
+        placeholder="Nama pengeluaran"
+      >
+
+      <input
+        id="expenseDate"
+        type="date"
+      >
+
+      <input
+        id="expenseAmount"
+        type="number"
+        min="0"
+        placeholder="Nominal"
+      >
+
+      <input
+        id="expenseNote"
+        type="text"
+        placeholder="Keterangan"
+      >
+
+    </div>
+
+    <button id="addExpense" class="btn primary">
+      + Tambah Pengeluaran
+    </button>
+
+  </div>
+
+  <div class="payments-card" style="margin-top:20px;">
+
+    <table class="payments-table">
+
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Tanggal</th>
+          <th>Pengeluaran</th>
+          <th>Nominal</th>
+          <th>Keterangan</th>
+        </tr>
+      </thead>
+
+      <tbody id="expenseList"></tbody>
+
+    </table>
+
+  </div>
+
+</div>
+
+<!-- ================= END PENGELUARAN ================= -->
 
       </section>
 
