@@ -223,6 +223,7 @@ list.forEach(r=>{
 
   </div>
 `;
+ }).join("")||`<div class="empty">Belum ada kegiatan.</div>`;
 $("sEvents").textContent=(events||[]).length;
 $("sPeople").textContent=uniquePeople.size;
 $("sSports").textContent=uniqueSports.size;
