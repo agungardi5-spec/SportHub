@@ -198,11 +198,7 @@ list.forEach(r=>{
 
       <div style="margin-top:8px;font-size:13px;">
 
-  <button
-    class="btn light"
-    onclick="toggleParticipants('${e.id}')">
-    👥 Kelola
-  </button>
+  
 
   <div style="margin-top:8px;font-size:13px;">
 
