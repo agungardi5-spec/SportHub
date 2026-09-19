@@ -642,23 +642,40 @@ function showAdminSection(sectionId, buttonId){
   }
 
   // ================= JADWAL OLAHRAGA =================
-  if(sectionId === "schedule"){
 
-    const scheduleList =
-      $("adminList")?.closest(".dashboard-card");
 
-    if(scheduleList){
-      scheduleList.style.display="block";
+if(sectionId === "schedule"){
+
+  const scheduleList =
+    $("adminList")?.closest(".dashboard-card");
+
+  const createEvent =
+    document.querySelector(".dashboard-card.create-event");
+
+  // Tampilkan kartu daftar jadwal
+  if(scheduleList){
+
+    const parent = scheduleList.parentElement;
+
+    if(parent){
+      parent.style.display="grid";
+
+      [...parent.children].forEach(el=>{
+        if(el !== scheduleList){
+          el.style.display="none";
+        }
+      });
     }
 
-    const createEvent =
-      document.querySelector(".dashboard-card.create-event");
-
-    if(createEvent){
-      createEvent.style.display="block";
-    }
-
+    scheduleList.style.display="block";
   }
+
+  // Tampilkan form buat jadwal
+  if(createEvent){
+    createEvent.style.display="block";
+  }
+
+}
 
   // ================= ACTIVE SIDEBAR =================
 
