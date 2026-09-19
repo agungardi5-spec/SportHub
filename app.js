@@ -819,6 +819,16 @@ if(sectionId === "schedule"){
   }
 
 }
+// ================= MENU DASHBOARD =================
+if($("dashboardBtn")){
+  $("dashboardBtn").onclick=()=>{
+    showAdminSection(
+      "dashboard",
+      "dashboardBtn"
+    );
+  };
+}
+
 // ================= MENU PESERTA =================
 
 if($("participantsBtn")){
