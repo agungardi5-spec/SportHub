@@ -1055,30 +1055,8 @@ async function loadReport(){
     </tr>
   `;
 }
-// ================= TAMPILKAN =================
 
-  $("reportIncome").textContent=rupiah(income);
-  $("reportExpense").textContent=rupiah(expense);
-  $("reportBalance").textContent=rupiah(balance);
-
-
-  $("reportSummary").innerHTML=`
-    <tr>
-      <td>Total Iuran Dibayar</td>
-      <td>${rupiah(income)}</td>
-    </tr>
-
-    <tr>
-      <td>Total Pengeluaran</td>
-      <td>${rupiah(expense)}</td>
-    </tr>
-
-    <tr>
-      <td><strong>Saldo</strong></td>
-      <td><strong>${rupiah(balance)}</strong></td>
-    </tr>
-  `;
-}
+ 
 if($("reportMonth")){
   $("reportMonth").onchange=function(){
     loadReport();
