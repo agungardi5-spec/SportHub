@@ -792,7 +792,7 @@ button {
 }
 
 .sport-box {
-  min-height: 108px;
+  min-height: 135px;
 
   display: flex;
   flex-direction: column;
@@ -800,21 +800,35 @@ button {
   align-items: center;
   justify-content: center;
 
-  gap: 5px;
+  gap: 8px;
 
-  border-radius: 11px;
+  border-radius: 16px;
 
   text-align: center;
 
-  border: 1px solid transparent;
+  border: 1px solid #e3ebf5;
+
+  background: #ffffff;
+
+  box-shadow: 0 4px 14px rgba(18,61,107,.06);
+
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.sport-box:hover {
+  transform: translateY(-3px);
+
+  box-shadow: 0 8px 20px rgba(18,61,107,.10);
 }
 
 .sport-box strong {
-  font-size: 31px;
+  font-size: 42px;
+  line-height: 1;
 }
 
 .sport-box b {
-  font-size: 12px;
+  font-size: 16px;
+  color: #123d6b;
 }
 
 .sport-box small {
