@@ -1409,3 +1409,49 @@ button {
   }
 
 }
+/* ================= TABEL PENGELUARAN ================= */
+
+#expenseSection .payments-card{
+  overflow-x:auto;
+}
+
+#expenseSection .payments-table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  border:1px solid #d8e2ef;
+  border-radius:14px;
+  overflow:hidden;
+  background:#fff;
+}
+
+#expenseSection .payments-table th{
+  background:#eef5fc;
+  color:#12345b;
+  font-weight:700;
+  padding:15px 16px;
+  border-right:1px solid #d8e2ef;
+  border-bottom:1px solid #d8e2ef;
+  text-align:left;
+}
+
+#expenseSection .payments-table td{
+  padding:16px;
+  border-right:1px solid #d8e2ef;
+  border-bottom:1px solid #d8e2ef;
+  color:#17365d;
+  background:#fff;
+}
+
+#expenseSection .payments-table th:last-child,
+#expenseSection .payments-table td:last-child{
+  border-right:none;
+}
+
+#expenseSection .payments-table tr:last-child td{
+  border-bottom:none;
+}
+
+#expenseSection .payments-table tbody tr:hover td{
+  background:#f8fbff;
+}
