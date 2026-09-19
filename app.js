@@ -128,7 +128,7 @@ list.forEach(r=>{
   <div class="event-card"
        style="
          display:grid;
-         grid-template-columns:1.2fr 1fr 1.3fr .8fr .8fr 1.2fr 1.3fr;
+         grid-template-columns:1.4fr .9fr 1.2fr .9fr .8fr .9fr 1.2fr;
          gap:16px;
          align-items:center;
          padding:18px 20px;
