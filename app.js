@@ -668,6 +668,7 @@ if(sectionId === "schedule"){
     }
 
     scheduleList.style.display="block";
+   scheduleList.style.gridColumn="1 / -1";
   }
 
   // Tampilkan form buat jadwal
