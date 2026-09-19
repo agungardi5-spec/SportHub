@@ -696,7 +696,7 @@ function showAdminSection(sectionId, buttonId){
     "participantsSection",
     "paymentsSection",
     "attendanceSection",
-   "expenseSection"
+   "expenseSection",
    "reportSection"
   ];
 
@@ -971,9 +971,7 @@ msg("paymentsMsg","");
 // ================= LAPORAN =================
 
 async function loadReport(){
-  ...
-}
-async function loadReport(){
+
 
   // ================= PEMASUKAN =================
 
