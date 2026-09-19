@@ -943,7 +943,15 @@ if($("scheduleBtn")){
     );
   };
 }
-
+// ================= JENIS OLAHRAGA =================
+if($("sportsBtn")){
+  $("sportsBtn").onclick=()=>{
+    showAdminSection(
+      "sports",
+      "sportsBtn"
+    );
+  };
+}
 
 // Tampilkan Dashboard saat pertama kali
 
