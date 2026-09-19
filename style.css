@@ -882,19 +882,18 @@ button {
   width: 100%;
   box-sizing: border-box;
   padding: 16px 18px !important;
-  border-radius: 12px;
+  border-radius: 14px;
   margin-bottom: 12px;
 
-  display: grid !important;
-  grid-template-columns:
-    1.2fr
-    1fr
-    1.3fr
-    .8fr
-    .8fr
-    1fr
-    1.5fr !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 14px !important;
 
+  background: #ffffff;
+  border: 1px solid #e3ebf5;
+
+  box-shadow: 0 4px 14px rgba(18,61,107,.06);
+}
   gap: 14px !important;
   align-items: start !important;
 }
