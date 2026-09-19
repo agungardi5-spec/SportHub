@@ -708,3 +708,114 @@ if($("participantsBtn")){
 }
 
 // ================= END PESERTA =================
+// ================= IURAN & PEMBAYARAN =================
+
+async function loadPayments(){
+
+  const list = $("paymentsList");
+
+  if(!list) return;
+
+  list.innerHTML = "";
+  msg("paymentsMsg","Memuat data pembayaran...");
+
+  const {data:regs,error:regError}=await db
+    .from("registrations")
+    .select("member_id,event_id,payment_status,profiles(full_name),sports_events(name,fee)");
+
+  if(regError){
+    msg("paymentsMsg",regError.message,"error");
+    return;
+  }
+
+  let total = 0;
+  let paid = 0;
+  let unpaid = 0;
+
+  if(!regs || regs.length===0){
+
+    list.innerHTML=`
+      <tr>
+        <td colspan="5">Belum ada data pembayaran.</td>
+      </tr>
+    `;
+
+    $("paymentsTotal").textContent=rupiah(0);
+    $("paymentsPaid").textContent=rupiah(0);
+    $("paymentsUnpaid").textContent=rupiah(0);
+
+    msg("paymentsMsg","");
+    return;
+  }
+
+  list.innerHTML=regs.map((r,index)=>{
+
+    const fee=Number(r.sports_events?.fee||0);
+
+    total+=fee;
+
+    if(r.payment_status==="paid"){
+      paid+=fee;
+    }else{
+      unpaid+=fee;
+    }
+
+    return `
+      <tr>
+        <td>${index+1}</td>
+        <td>${esc(r.profiles?.full_name||"Peserta")}</td>
+        <td>${esc(r.sports_events?.name||"-")}</td>
+        <td>${rupiah(fee)}</td>
+        <td>
+          ${
+            r.payment_status==="paid"
+            ? "✅ Sudah Bayar"
+            : "⏳ Belum Bayar"
+          }
+        </td>
+      </tr>
+    `;
+
+  }).join("");
+
+  $("paymentsTotal").textContent=rupiah(total);
+  $("paymentsPaid").textContent=rupiah(paid);
+  $("paymentsUnpaid").textContent=rupiah(unpaid);
+
+  msg("paymentsMsg","");
+}
+
+
+// ================= MENU IURAN =================
+
+if($("paymentsBtn")){
+
+  $("paymentsBtn").onclick=()=>{
+
+    const dashboard=$("adminPage");
+
+    if(dashboard){
+
+      [...dashboard.children].forEach(el=>{
+        el.style.display="none";
+      });
+
+      const payments=$("paymentsSection");
+
+      if(payments){
+        payments.style.display="block";
+      }
+    }
+
+    document.querySelectorAll(".sidebar-item").forEach(btn=>{
+      btn.classList.remove("active");
+    });
+
+    $("paymentsBtn").classList.add("active");
+
+    loadPayments();
+  };
+
+}
+
+// ================= END IURAN & PEMBAYARAN =================
