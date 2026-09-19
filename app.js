@@ -1057,6 +1057,7 @@ if(window.editingExpenseId){
   }
 
   window.editingExpenseId=null;
+ $("addExpense").textContent="➕ Tambah Pengeluaran";
 
   $("expenseName").value="";
   $("expenseDate").value="";
@@ -1134,8 +1135,9 @@ async function editExpense(id){
   $("expenseNote").value=data.notes||"";
 
   window.editingExpenseId=id;
+ $("addExpense").textContent="💾 Simpan Perubahan";
 
-  $("expenseMsg").textContent="Mode edit aktif. Ubah data lalu klik Tambah Pengeluaran.";
+  $("expenseMsg").textContent="Mode edit aktif. Ubah data lalu klik Simpan Perubahan.";
 }
 
 // ================= MENU IURAN =================
