@@ -1455,3 +1455,148 @@ button {
 #expenseSection .payments-table tbody tr:hover td{
   background:#f8fbff;
 }
+/* ================= LAPORAN KEUANGAN ================= */
+
+#reportSection{
+  padding:10px 0 30px;
+}
+
+#reportSection .section-header{
+  margin-bottom:24px;
+}
+
+#reportSection .section-header h2{
+  font-size:28px;
+  margin-bottom:6px;
+}
+
+#reportSection .section-header p{
+  color:#64748b;
+}
+
+/* Kartu ringkasan */
+
+#reportSection .payments-summary{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+  margin-bottom:24px;
+}
+
+#reportSection .payments-summary > div{
+  background:#fff;
+  border:1px solid #dbe5f0;
+  border-radius:16px;
+  padding:20px 22px;
+  box-shadow:0 4px 14px rgba(15,23,42,.06);
+}
+
+#reportSection .payments-summary span{
+  display:block;
+  font-size:14px;
+  color:#64748b;
+  margin-bottom:8px;
+}
+
+#reportSection .payments-summary strong{
+  display:block;
+  font-size:24px;
+  color:#12345b;
+}
+
+/* Card tabel */
+
+#reportSection .payments-card{
+  background:#fff;
+  border:1px solid #dbe5f0;
+  border-radius:16px;
+  padding:22px;
+  box-shadow:0 4px 14px rgba(15,23,42,.06);
+  overflow-x:auto;
+}
+
+#reportSection .payments-card h3{
+  margin:0 0 18px;
+  color:#12345b;
+  font-size:19px;
+}
+
+/* Tabel */
+
+#reportSection .payments-table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  border:1px solid #d8e2ef;
+  border-radius:12px;
+  overflow:hidden;
+  background:#fff;
+}
+
+#reportSection .payments-table th{
+  background:#eef5fc;
+  color:#12345b;
+  font-weight:700;
+  padding:15px 18px;
+  border-right:1px solid #d8e2ef;
+  border-bottom:1px solid #d8e2ef;
+  text-align:left;
+}
+
+#reportSection .payments-table td{
+  padding:16px 18px;
+  color:#17365d;
+  border-right:1px solid #e2e8f0;
+  border-bottom:1px solid #e2e8f0;
+  background:#fff;
+}
+
+#reportSection .payments-table th:last-child,
+#reportSection .payments-table td:last-child{
+  border-right:none;
+}
+
+#reportSection .payments-table tr:last-child td{
+  border-bottom:none;
+}
+
+/* Baris saldo */
+
+#reportSection .payments-table tr:last-child td{
+  background:#f8fbff;
+  font-weight:700;
+  color:#12345b;
+}
+
+/* Hover */
+
+#reportSection .payments-table tbody tr:hover td{
+  background:#f8fbff;
+}
+
+/* Nominal rata kanan */
+
+#reportSection .payments-table td:last-child,
+#reportSection .payments-table th:last-child{
+  text-align:right;
+}
+
+/* Tampilan HP */
+
+@media (max-width:768px){
+
+  #reportSection .payments-summary{
+    grid-template-columns:1fr;
+  }
+
+  #reportSection .payments-card{
+    padding:14px;
+  }
+
+  #reportSection .payments-table th,
+  #reportSection .payments-table td{
+    padding:12px;
+    font-size:14px;
+  }
+
+}
