@@ -677,7 +677,8 @@ function showAdminSection(sectionId, buttonId){
   const specialSections = [
     "participantsSection",
     "paymentsSection",
-    "attendanceSection"
+    "attendanceSection",
+   "expenseSection"
   ];
 
   // Sembunyikan semua bagian
@@ -734,7 +735,13 @@ function showAdminSection(sectionId, buttonId){
     loadAttendanceEvents();
 
   }
+if(sectionId === "expense"){
+  const expense=$("expenseSection");
 
+  if(expense){
+    expense.style.display="block";
+  }
+}
   // ================= JADWAL OLAHRAGA =================
 
 
@@ -825,7 +832,14 @@ if($("attendanceBtn")){
     );
   };
 }
-
+if($("expenseBtn")){
+  $("expenseBtn").onclick=()=>{
+    showAdminSection(
+      "expense",
+      "expenseBtn"
+    );
+  };
+}
 
 // ================= JADWAL OLAHRAGA =================
 
