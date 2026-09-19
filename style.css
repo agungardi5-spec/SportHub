@@ -1732,3 +1732,51 @@ button {
 #paymentsSection .payments-table tbody tr:hover {
   background: #f8fbff;
 }
+/* ================= PESERTA ================= */
+
+#participantsSection {
+  padding: 26px;
+}
+
+#participantsSection .section-header h2 {
+  font-size: 28px;
+  color: #123d6b;
+  margin-bottom: 6px;
+}
+
+#participantsSection .section-header p {
+  color: #64748b;
+  margin-bottom: 24px;
+}
+
+#participantsSection .participants-card {
+  background: #ffffff;
+  border: 1px solid #e3ebf5;
+  border-radius: 16px;
+  padding: 8px;
+  box-shadow: 0 4px 14px rgba(18,61,107,.06);
+  overflow: hidden;
+}
+
+#participantsSection .participants-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#participantsSection .participants-table th {
+  background: #f4f8fc;
+  color: #123d6b;
+  text-align: left;
+  padding: 14px;
+  font-size: 13px;
+}
+
+#participantsSection .participants-table td {
+  padding: 14px;
+  border-top: 1px solid #edf2f7;
+  font-size: 14px;
+}
+
+#participantsSection .participants-table tbody tr:hover {
+  background: #f8fbff;
+}
