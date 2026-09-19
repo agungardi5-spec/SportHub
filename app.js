@@ -866,7 +866,14 @@ if($("expenseBtn")){
     );
   };
 }
-
+if($("reportBtn")){
+  $("reportBtn").onclick=()=>{
+    showAdminSection(
+      "report",
+      "reportBtn"
+    );
+  };
+}
 // ================= JADWAL OLAHRAGA =================
 
 if($("scheduleBtn")){
