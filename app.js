@@ -767,6 +767,7 @@ if(sectionId === "expense"){
   if(report){
     report.style.display="block";
   }
+  loadReport();
 }
   // ================= JADWAL OLAHRAGA =================
 
@@ -966,8 +967,85 @@ $("paymentsUnpaid").textContent=rupiah(unpaid);
 msg("paymentsMsg","");
 
 }
+ 
+// ================= LAPORAN =================
 
+async function loadReport(){
+  ...
+}
+async function loadReport(){
+
+  // ================= PEMASUKAN =================
+
+  const {data:regs,error:regError}=await db
+    .from("registrations")
+    .select("payment_status,sports_events(fee)");
+
+  if(regError){
+    msg("expenseMsg",regError.message,"error");
+    return;
+  }
+
+  let income=0;
+
+  (regs||[]).forEach(r=>{
+    const fee=Number(r.sports_events?.fee||0);
+
+    if(r.payment_status==="paid"){
+      income+=fee;
+    }
+  });
+
+
+  // ================= PENGELUARAN =================
+
+  const {data:expenses,error:expenseError}=await db
+    .from("expenses")
+    .select("amount");
+
+  if(expenseError){
+    msg("expenseMsg",expenseError.message,"error");
+    return;
+  }
+
+  let expense=0;
+
+  (expenses||[]).forEach(e=>{
+    expense+=Number(e.amount||0);
+  });
+
+
+  // ================= SALDO =================
+
+  const balance=income-expense;
+
+
+  // ================= TAMPILKAN =================
+
+  $("reportIncome").textContent=rupiah(income);
+  $("reportExpense").textContent=rupiah(expense);
+  $("reportBalance").textContent=rupiah(balance);
+
+
+  $("reportSummary").innerHTML=`
+    <tr>
+      <td>Total Iuran Dibayar</td>
+      <td>${rupiah(income)}</td>
+    </tr>
+
+    <tr>
+      <td>Total Pengeluaran</td>
+      <td>${rupiah(expense)}</td>
+    </tr>
+
+    <tr>
+      <td><strong>Saldo</strong></td>
+      <td><strong>${rupiah(balance)}</strong></td>
+    </tr>
+  `;
+}
 async function loadExpenses(){
+
 
   const list=$("expenseList");
 
