@@ -1042,6 +1042,11 @@ async function loadReport(){
     </tr>
   `;
 }
+if($("reportMonth")){
+  $("reportMonth").addEventListener("change",()=>{
+    loadReport();
+  });
+}
 async function loadExpenses(){
 
 
