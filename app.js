@@ -526,115 +526,8 @@ loadAttendanceEvents();
 loadAttendanceStats();
 
 // ================= END ABSENSI =================
-if($("attendanceBtn")){
-  $("attendanceBtn").onclick=()=>{
-    const section=$("attendanceSection");
-
-    if(section){
-      section.style.display="block";
-      section.scrollIntoView({
-        behavior:"smooth",
-        block:"start"
-      });
-
-      loadAttendanceEvents();
-    }
-  };
-}
-// ================= NAVIGASI SIDEBAR =================
-
-function showAdminSection(sectionId, buttonId){
-
-  const dashboard = $("adminPage");
-
-  if(!dashboard) return;
-
-  // Semua bagian langsung di dalam adminPage
-  const sections = [...dashboard.children];
-
-  // ================= DASHBOARD =================
-
-  if(sectionId === "dashboard"){
-
-    sections.forEach(el=>{
-      el.style.display = "";
-    });
-
-    // Absensi tidak tampil di Dashboard
-    const attendance = $("attendanceSection");
-
-    if(attendance){
-      attendance.style.display = "none";
-    }
-  }
-
-  // ================= ABSENSI =================
-
-  if(sectionId === "attendance"){
-
-    // Sembunyikan seluruh isi dashboard
-    sections.forEach(el=>{
-      el.style.display = "none";
-    });
-
-    // Tampilkan hanya Absensi
-    const attendance = $("attendanceSection");
-
-    if(attendance){
-      attendance.style.display = "block";
-    }
-
-    // Muat kegiatan
-    loadAttendanceEvents();
-  }
-
-  // ================= MENU AKTIF =================
-
-  document.querySelectorAll(".sidebar-item").forEach(btn=>{
-    btn.classList.remove("active");
-  });
-
-  const activeButton = $(buttonId);
-
-  if(activeButton){
-    activeButton.classList.add("active");
-  }
-
-}
 
 
-// ================= DASHBOARD =================
-
-if($("dashboardBtn")){
-  $("dashboardBtn").onclick=()=>{
-    showAdminSection(
-      "dashboard",
-      "dashboardBtn"
-    );
-  };
-}
-
-
-// ================= ABSENSI =================
-
-if($("attendanceBtn")){
-  $("attendanceBtn").onclick=()=>{
-    showAdminSection(
-      "attendance",
-      "attendanceBtn"
-    );
-  };
-}
-
-
-// Tampilkan Dashboard saat pertama kali
-showAdminSection(
-  "dashboard",
-  "dashboardBtn"
-);
-
-
-// ================= END NAVIGASI SIDEBAR =================
 // ================= PESERTA =================
 
 async function loadParticipants(){
@@ -677,7 +570,109 @@ async function loadParticipants(){
   msg("participantsMsg","");
 }
 
+// ================= NAVIGASI ADMIN =================
 
+function showAdminSection(sectionId, buttonId){
+
+  const dashboard = $("adminPage");
+
+  if(!dashboard) return;
+
+  const sections = [...dashboard.children];
+
+  const specialSections = [
+    "participantsSection",
+    "paymentsSection",
+    "attendanceSection"
+  ];
+
+  // Sembunyikan semua bagian
+  sections.forEach(el=>{
+    el.style.display="none";
+  });
+
+  // ================= DASHBOARD =================
+  if(sectionId === "dashboard"){
+
+    sections.forEach(el=>{
+      if(!specialSections.includes(el.id)){
+        el.style.display="";
+      }
+    });
+
+  }
+
+  // ================= PESERTA =================
+  if(sectionId === "participants"){
+
+    const participants=$("participantsSection");
+
+    if(participants){
+      participants.style.display="block";
+    }
+
+    loadParticipants();
+
+  }
+
+  // ================= PEMBAYARAN =================
+  if(sectionId === "payments"){
+
+    const payments=$("paymentsSection");
+
+    if(payments){
+      payments.style.display="block";
+    }
+
+    loadPayments();
+
+  }
+
+  // ================= ABSENSI =================
+  if(sectionId === "attendance"){
+
+    const attendance=$("attendanceSection");
+
+    if(attendance){
+      attendance.style.display="block";
+    }
+
+    loadAttendanceEvents();
+
+  }
+
+  // ================= JADWAL OLAHRAGA =================
+  if(sectionId === "schedule"){
+
+    const scheduleList =
+      $("adminList")?.closest(".dashboard-card");
+
+    if(scheduleList){
+      scheduleList.style.display="block";
+    }
+
+    const createEvent =
+      document.querySelector(".dashboard-card.create-event");
+
+    if(createEvent){
+      createEvent.style.display="block";
+    }
+
+  }
+
+  // ================= ACTIVE SIDEBAR =================
+
+  document.querySelectorAll(".sidebar-item").forEach(btn=>{
+    btn.classList.remove("active");
+  });
+
+  const activeButton=$(buttonId);
+
+  if(activeButton){
+    activeButton.classList.add("active");
+  }
+
+}
 // ================= MENU PESERTA =================
 
 if($("participantsBtn")){
@@ -708,6 +703,36 @@ if($("participantsBtn")){
 }
 
 // ================= END PESERTA =================
+// ================= ABSENSI =================
+
+if($("attendanceBtn")){
+  $("attendanceBtn").onclick=()=>{
+    showAdminSection(
+      "attendance",
+      "attendanceBtn"
+    );
+  };
+}
+
+
+// ================= JADWAL OLAHRAGA =================
+
+if($("scheduleBtn")){
+  $("scheduleBtn").onclick=()=>{
+    showAdminSection(
+      "schedule",
+      "scheduleBtn"
+    );
+  };
+}
+
+
+// Tampilkan Dashboard saat pertama kali
+
+showAdminSection(
+  "dashboard",
+  "dashboardBtn"
+);
 // ================= IURAN & PEMBAYARAN =================
 
 async function loadPayments(){
