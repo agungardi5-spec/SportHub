@@ -697,6 +697,7 @@ function showAdminSection(sectionId, buttonId){
     "paymentsSection",
     "attendanceSection",
    "expenseSection"
+   "reportSection"
   ];
 
   // Sembunyikan semua bagian
@@ -758,6 +759,13 @@ if(sectionId === "expense"){
 
   if(expense){
     expense.style.display="block";
+  }
+}
+ if(sectionId === "report"){
+  const report=$("reportSection");
+
+  if(report){
+    report.style.display="block";
   }
 }
   // ================= JADWAL OLAHRAGA =================
