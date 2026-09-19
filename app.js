@@ -901,6 +901,42 @@ async function loadPayments(){
     msg("paymentsMsg","");
     return;
   }
+list.innerHTML=regs.map((r,index)=>{
+  const fee=Number(r.sports_events?.fee||0);
+
+  total+=fee;
+
+  if(r.payment_status==="paid"){
+    paid+=fee;
+  }else{
+    unpaid+=fee;
+  }
+
+  return `
+    <tr>
+      <td>${index+1}</td>
+      <td>${esc(r.profiles?.full_name||"Peserta")}</td>
+      <td>${esc(r.sports_events?.name||"-")}</td>
+      <td>${rupiah(fee)}</td>
+      <td>
+        ${
+          r.payment_status==="paid"
+          ? "✅ Sudah Bayar"
+          : "⏳ Belum Bayar"
+        }
+      </td>
+    </tr>
+  `;
+}).join("");
+
+$("paymentsTotal").textContent=rupiah(total);
+$("paymentsPaid").textContent=rupiah(paid);
+$("paymentsUnpaid").textContent=rupiah(unpaid);
+
+msg("paymentsMsg","");
+
+}
+
 async function loadExpenses(){
 
   const list=$("expenseList");
@@ -957,7 +993,8 @@ async function loadExpenses(){
 
   msg("expenseMsg","");
 }
- async function addExpense(){
+
+async function addExpense(){
 
   const name=$("expenseName").value.trim();
   const date=$("expenseDate").value;
@@ -1001,42 +1038,6 @@ async function loadExpenses(){
   );
 
   await loadExpenses();
-}
-  list.innerHTML=regs.map((r,index)=>{
-
-    const fee=Number(r.sports_events?.fee||0);
-
-    total+=fee;
-
-    if(r.payment_status==="paid"){
-      paid+=fee;
-    }else{
-      unpaid+=fee;
-    }
-
-    return `
-      <tr>
-        <td>${index+1}</td>
-        <td>${esc(r.profiles?.full_name||"Peserta")}</td>
-        <td>${esc(r.sports_events?.name||"-")}</td>
-        <td>${rupiah(fee)}</td>
-        <td>
-          ${
-            r.payment_status==="paid"
-            ? "✅ Sudah Bayar"
-            : "⏳ Belum Bayar"
-          }
-        </td>
-      </tr>
-    `;
-
-  }).join("");
-
-  $("paymentsTotal").textContent=rupiah(total);
-  $("paymentsPaid").textContent=rupiah(paid);
-  $("paymentsUnpaid").textContent=rupiah(unpaid);
-
-  msg("paymentsMsg","");
 }
 
 
