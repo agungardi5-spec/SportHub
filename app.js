@@ -745,7 +745,8 @@ function showAdminSection(sectionId, buttonId){
     "attendanceSection",
    "expenseSection",
    "reportSection",
-   "scheduleSection"
+   "scheduleSection",
+   "sportsSection"
   ];
 
   // Sembunyikan semua bagian
@@ -853,7 +854,14 @@ if(sectionId === "schedule"){
   }
 
 }
+// ================= JENIS OLAHRAGA =================
+if(sectionId === "sports"){
+  const sports = $("sportsSection");
 
+  if(sports){
+    sports.style.display = "block";
+  }
+}
   // ================= ACTIVE SIDEBAR =================
 
   document.querySelectorAll(".sidebar-item").forEach(btn=>{
