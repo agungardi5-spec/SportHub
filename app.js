@@ -124,45 +124,105 @@ list.forEach(r=>{
   }
 });
 
-  return `<div class="event-card">
-   <div class="event-top">
+ return `
+  <div class="event-card"
+       style="
+         display:grid;
+         grid-template-columns:1.2fr 1fr 1.3fr .8fr .8fr 1.2fr 1.3fr;
+         gap:16px;
+         align-items:center;
+         padding:18px 20px;
+         margin-bottom:12px;
+       ">
+
     <div>
-     <div class="sport-title">⚽ ${esc(e.name)}</div>
-     <div class="event-info">📅 ${e.event_date} &nbsp; ⏰ ${String(e.event_time).slice(0,5)}<br>📍 ${esc(e.location)}</div>
+      <div class="sport-title">
+        ⚽ ${esc(e.name)}
+      </div>
+      <div class="event-info">
+        📅 ${e.event_date}
+      </div>
     </div>
-    <span class="badge ${e.status!=="open"?"closed":""}">${e.status==="open"?"DIBUKA":"DITUTUP"}</span>
-   </div>
 
-   <div class="fee">${rupiah(e.fee)} <small>/ orang</small></div>
+    <div class="event-info">
+      ⏰ ${String(e.event_time).slice(0,5)}
+    </div>
 
-   <div class="event-info">
-    👥 ${list.length}/${e.capacity} peserta &nbsp; • &nbsp;
-    Total ${rupiah(list.length*e.fee)}
-   </div>
+    <div class="event-info">
+      📍 ${esc(e.location)}
+    </div>
 
-   <div class="event-actions" style="margin-top:12px">
-    ${e.status==="open"
-     ?`<button class="btn light" onclick="toggleEvent('${e.id}','closed')">Tutup Pendaftaran</button>`
-     :`<button class="btn light" onclick="toggleEvent('${e.id}','open')">Buka Pendaftaran</button>`}
-    <button class="danger" onclick="deleteEvent('${e.id}')">Hapus</button>
-   </div>
+    <div>
+      <small>Biaya</small>
+      <div class="fee">
+        ${rupiah(e.fee)}
+      </div>
+    </div>
 
-   <div class="participants">
-    <b>Daftar Peserta</b>
-    ${list.length
-     ?list.map(r=>`<div class="person">
-       <span>${esc(r.profiles?.full_name||"Member")}</span>
-       <span class="pay">
-        ${r.payment_status==="paid"
-         ?"✅ Sudah Bayar"
-         :`⏳ Belum Bayar <button onclick="paid('${r.id}')">Tandai Bayar</button>`}
-       </span>
-      </div>`).join("")
-     :`<div class="event-info" style="margin-top:8px">Belum ada peserta.</div>`}
-   </div>
-  </div>`
- }).join("")||`<div class="empty">Belum ada kegiatan.</div>`;
+    <div>
+      <small>Peserta</small>
+      <div class="event-info">
+        👥 ${list.length}/${e.capacity}
+      </div>
+    </div>
 
+    <div>
+      <small>Status</small>
+      <div>
+        <span class="badge ${
+          e.status==="open" ? "" : "closed"
+        }">
+          ${e.status==="open" ? "DIBUKA" : "DITUTUP"}
+        </span>
+      </div>
+    </div>
+
+    <div class="event-actions">
+
+      ${
+        e.status==="open"
+        ? `<button class="btn light"
+            onclick="toggleEvent('${e.id}','closed')">
+            Tutup Pendaftaran
+          </button>`
+        : `<button class="btn light"
+            onclick="toggleEvent('${e.id}','open')">
+            Buka Pendaftaran
+          </button>`
+      }
+
+      <button class="btn danger"
+        onclick="deleteEvent('${e.id}')">
+        Hapus
+      </button>
+
+      <div style="margin-top:8px;font-size:13px;">
+        <b>Peserta:</b>
+        ${
+          list.length
+          ? list.map(r=>`
+              <div>
+                ${esc(r.profiles?.full_name||"Member")}
+                ${
+                  r.payment_status==="paid"
+                  ? "✅"
+                  : `⏳
+                    <button
+                      class="btn light"
+                      onclick="paid('${r.id}')">
+                      Tandai Bayar
+                    </button>`
+                }
+              </div>
+            `).join("")
+          : "Belum ada peserta"
+        }
+      </div>
+
+    </div>
+
+  </div>
+`;
 $("sEvents").textContent=(events||[]).length;
 $("sPeople").textContent=uniquePeople.size;
 $("sSports").textContent=uniqueSports.size;
