@@ -1600,3 +1600,49 @@ button {
   }
 
 }
+/* ================= FILTER LAPORAN ================= */
+
+#reportSection .report-filter{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom:20px;
+  padding:16px 20px;
+  background:#fff;
+  border:1px solid #dbe5f0;
+  border-radius:14px;
+  box-shadow:0 4px 14px rgba(15,23,42,.05);
+}
+
+#reportSection .report-filter label{
+  font-weight:700;
+  color:#12345b;
+}
+
+#reportSection .report-filter input{
+  padding:10px 14px;
+  border:1px solid #cbd5e1;
+  border-radius:10px;
+  font-size:14px;
+  color:#12345b;
+  background:#fff;
+}
+
+#reportSection .report-filter input:focus{
+  outline:none;
+  border-color:#3b82f6;
+  box-shadow:0 0 0 3px rgba(59,130,246,.12);
+}
+
+@media (max-width:768px){
+
+  #reportSection .report-filter{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  #reportSection .report-filter input{
+    width:100%;
+  }
+
+}
