@@ -545,8 +545,12 @@ window.deleteExpense=async id=>{
 };
 
 $("loginBtn").onclick=async()=>{
- const email=$("loginEmail").value.trim();
- const password=$("loginPassword").value;
+ const loginInput=$("loginEmail").value.trim().toLowerCase();
+const password=$("loginPassword").value;
+
+const email = loginInput.includes("@")
+  ? loginInput
+  : loginInput + "@sporthub.local";
 
  msg("authMsg","Memproses...");
 
@@ -564,17 +568,24 @@ $("loginBtn").onclick=async()=>{
 
 $("registerBtn").onclick=async()=>{
  const name=$("regName").value.trim();
- const email=$("regEmail").value.trim();
- const password=$("regPassword").value;
+const username=$("regUsername").value.trim().toLowerCase();
+const password=$("regPassword").value;
 
- if(!name||!email||password.length<6)
+ if(!name||!username||password.length<6)
   return msg("authMsg","Lengkapi data dan password minimal 6 karakter.","error");
 
- const {data,error}=await db.auth.signUp({
-  email,
+ const authEmail = username + "@sporthub.local";
+
+const {data,error}=await db.auth.signUp({
+  email:authEmail,
   password,
-  options:{data:{full_name:name}}
- });
+  options:{
+    data:{
+      full_name:name,
+      username:username
+    }
+  }
+});
 
  if(error)
   msg("authMsg",error.message,"error");
