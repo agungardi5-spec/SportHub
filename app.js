@@ -1057,7 +1057,7 @@ async function loadPayments(){
 
   const {data:regs,error:regError}=await db
     .from("registrations")
-    .select("member_id,event_id,payment_status,profiles(full_name),sports_events(name,fee)");
+    .select("member_id,event_id,payment_status,profiles(full_name),sports_events(name,fee,event_date)")
 
   if(regError){
     msg("paymentsMsg",regError.message,"error");
@@ -1072,7 +1072,7 @@ async function loadPayments(){
 
     list.innerHTML=`
       <tr>
-        <td colspan="5">Belum ada data pembayaran.</td>
+        <td colspan="6">Belum ada data pembayaran.</td>
       </tr>
     `;
 
@@ -1099,7 +1099,8 @@ list.innerHTML=regs.map((r,index)=>{
       <td>${index+1}</td>
       <td>${esc(r.profiles?.full_name||"Peserta")}</td>
       <td>${esc(r.sports_events?.name||"-")}</td>
-      <td>${rupiah(fee)}</td>
+<td>${r.sports_events?.event_date || "-"}</td>
+<td>${rupiah(fee)}</td>
       <td>
         ${
           r.payment_status==="paid"
