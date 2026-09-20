@@ -111,6 +111,13 @@ const uniqueSports=new Set();
 
  $("adminList").innerHTML=(events||[]).map(e=>{
   const list=by[e.id]||[];
+  const paidCount = list.filter(
+  r => r.payment_status === "paid"
+).length;
+
+const unpaidCount = list.filter(
+  r => r.payment_status !== "paid"
+).length;
   uniqueSports.add(e.name);
   people+=list.length;
   money+=list.length*e.fee;
@@ -199,7 +206,15 @@ list.forEach(r=>{
     <div class="event-info">
       👥 Peserta:
       <strong>${list.length}/${e.capacity}</strong>
-    </div>
+      <div class="event-info">
+  💰
+  <small>Pembayaran</small>
+  <strong>
+    ✅ ${paidCount} Lunas
+    &nbsp;|&nbsp;
+    ⏳ ${unpaidCount} Belum Bayar
+  </strong>
+</div>
 
     <div class="event-actions"
       style="
