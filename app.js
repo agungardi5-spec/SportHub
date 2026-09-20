@@ -377,15 +377,122 @@ window.paid=async id=>{
  if(error)alert(error.message);
  else loadAdmin();
 };
-window.toggleParticipants=function(id){
+window.toggleParticipants=async function(id){
+
   const el=document.getElementById("participants-"+id);
 
   if(!el) return;
 
-  el.style.display =
-    el.style.display==="none"
-      ? "block"
-      : "none";
+  // Tutup jika sedang terbuka
+  if(el.style.display==="block"){
+    el.style.display="none";
+    return;
+  }
+
+  el.style.display="block";
+
+  el.innerHTML="<b>Memuat peserta...</b>";
+
+  // Ambil peserta kegiatan
+  const {data:regs,error}=await db
+    .from("registrations")
+    .select(`
+      id,
+      member_id,
+      payment_status,
+      profiles(full_name)
+    `)
+    .eq("event_id",id);
+
+  if(error){
+    el.innerHTML=`<span style="color:#dc2626;">${esc(error.message)}</span>`;
+    return;
+  }
+
+  // Ambil data absensi
+  const {data:attendance,error:attError}=await db
+    .from("attendance")
+    .select("member_id,status")
+    .eq("event_id",id);
+
+  if(attError){
+    el.innerHTML=`<span style="color:#dc2626;">${esc(attError.message)}</span>`;
+    return;
+  }
+
+  const attendanceMap=new Map(
+    (attendance||[]).map(a=>[a.member_id,a.status])
+  );
+
+  if(!regs || regs.length===0){
+    el.innerHTML="<b>Peserta:</b><br><br>Belum ada peserta.";
+    return;
+  }
+
+  el.innerHTML=`
+    <b>Peserta:</b>
+    ${regs.map(r=>{
+
+      const payment =
+        r.payment_status==="paid"
+          ? "💰 Lunas"
+          : "⏳ Belum Bayar";
+
+      const attendanceStatus =
+        attendanceMap.get(r.member_id);
+
+      let attendanceText="❌ Belum Absen";
+
+      if(attendanceStatus==="present"){
+        attendanceText="✅ Hadir";
+      }else if(attendanceStatus==="excused"){
+        attendanceText="⏰ Izin";
+      }else if(attendanceStatus==="absent"){
+        attendanceText="❌ Tidak Hadir";
+      }
+
+      return `
+        <div style="
+          display:flex;
+          align-items:center;
+          justify-content:space-between;
+          gap:12px;
+          margin-top:10px;
+          padding:10px;
+          background:#fff;
+          border:1px solid #e3ebf5;
+          border-radius:8px;
+        ">
+
+          <span>
+            👤 ${esc(r.profiles?.full_name || "Member")}
+          </span>
+
+          <span>
+            ${payment}
+          </span>
+
+          <span>
+            ${attendanceText}
+          </span>
+
+          ${
+            r.payment_status==="paid"
+              ? ""
+              : `
+                <button
+                  class="btn light"
+                  onclick="paid('${r.id}')">
+                  Tandai Bayar
+                </button>
+              `
+          }
+
+        </div>
+      `;
+
+    }).join("")}
+  `;
 };
 
 window.deleteEvent=async id=>{
