@@ -1834,3 +1834,101 @@ button {
   padding: 20px;
   box-shadow: 0 4px 14px rgba(18,61,107,.06);
 }
+/* ================= PENGELUARAN ================= */
+
+#expenseSection {
+  padding: 26px;
+}
+
+#expenseSection .section-header h2 {
+  font-size: 28px;
+  color: #123d6b;
+  margin-bottom: 6px;
+}
+
+#expenseSection .section-header p {
+  color: #64748b;
+  margin-bottom: 24px;
+}
+
+#expenseSection .payments-summary {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin-bottom: 18px;
+}
+
+#expenseSection .payments-summary > div {
+  background: #ffffff;
+  border: 1px solid #e3ebf5;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 14px rgba(18,61,107,.06);
+}
+
+#expenseSection .payments-summary span {
+  display: block;
+  color: #64748b;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+#expenseSection .payments-summary strong {
+  display: block;
+  color: #123d6b;
+  font-size: 26px;
+}
+
+#expenseSection .payments-card {
+  background: #ffffff;
+  border: 1px solid #e3ebf5;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 14px rgba(18,61,107,.06);
+}
+
+#expenseSection .form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+#expenseSection .form-grid input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px 14px;
+  border: 1px solid #d8e3ef;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+#expenseSection #expenseNote {
+  grid-column: span 2;
+}
+
+#expenseSection #addExpense {
+  min-height: 44px;
+}
+
+#expenseSection .payments-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#expenseSection .payments-table th {
+  background: #f4f8fc;
+  color: #123d6b;
+  text-align: left;
+  padding: 14px;
+  font-size: 13px;
+}
+
+#expenseSection .payments-table td {
+  padding: 14px;
+  border-top: 1px solid #edf2f7;
+  font-size: 14px;
+}
+
+#expenseSection .payments-table tbody tr:hover {
+  background: #f8fbff;
+}
