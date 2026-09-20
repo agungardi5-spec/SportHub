@@ -1932,3 +1932,53 @@ button {
 #expenseSection .payments-table tbody tr:hover {
   background: #f8fbff;
 }
+/* ================= PENGATURAN ================= */
+
+#settingsSection {
+  padding: 26px;
+}
+
+#settingsSection .section-header h2 {
+  font-size: 28px;
+  color: #123d6b;
+  margin-bottom: 6px;
+}
+
+#settingsSection .section-header p {
+  color: #64748b;
+  margin-bottom: 24px;
+}
+
+#settingsSection .settings-card {
+  background: #fff;
+  border: 1px solid #e3ebf5;
+  border-radius: 16px;
+  padding: 22px;
+  max-width: 700px;
+  box-shadow: 0 4px 14px rgba(18, 61, 107, .06);
+}
+
+#settingsSection .settings-card h3 {
+  margin: 0 0 16px;
+  color: #123d6b;
+  font-size: 20px;
+}
+
+#settingsSection .settings-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 14px 0;
+  border-top: 1px solid #edf2f7;
+}
+
+#settingsSection .settings-info span {
+  color: #64748b;
+  font-size: 14px;
+}
+
+#settingsSection .settings-info strong {
+  color: #123d6b;
+  font-size: 15px;
+}
