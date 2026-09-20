@@ -772,7 +772,8 @@ function showAdminSection(sectionId, buttonId){
    "expenseSection",
    "reportSection",
    "scheduleSection",
-   "sportsSection"
+   "sportsSection",
+   "settingsSection"
   ];
 
   // Sembunyikan semua bagian
@@ -890,6 +891,19 @@ if(sectionId === "sports"){
 
   loadSports();
 }
+ // ================= PENGATURAN =================
+if(sectionId === "settings"){
+  const settings = $("settingsSection");
+
+  if(settings){
+    settings.style.display = "block";
+  }
+
+  if($("settingsName") && profile){
+    $("settingsName").textContent =
+      profile.full_name || "Admin SportHub";
+  }
+}
   // ================= ACTIVE SIDEBAR =================
 
   document.querySelectorAll(".sidebar-item").forEach(btn=>{
@@ -982,10 +996,13 @@ if($("scheduleBtn")){
 // ================= JENIS OLAHRAGA =================
 if($("sportsBtn")){
   $("sportsBtn").onclick=()=>{
-    showAdminSection(
-      "sports",
-      "sportsBtn"
-    );
+    showAdminSection("sports","sportsBtn");
+  };
+}
+
+if($("settingsBtn")){
+  $("settingsBtn").onclick=()=>{
+    showAdminSection("settings","settingsBtn");
   };
 }
 
