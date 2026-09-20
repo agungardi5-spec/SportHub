@@ -692,7 +692,6 @@ loadExpenses();
 async function loadParticipants(){
 
   const list = $("participantsList");
-  const message = $("participantsMsg");
 
   if(!list) return;
 
@@ -700,9 +699,15 @@ async function loadParticipants(){
   msg("participantsMsg","Memuat peserta...");
 
   const {data,error}=await db
-    .from("profiles")
-    .select("id,full_name")
-    .order("full_name");
+    .from("registrations")
+    .select(`
+      id,
+      member_id,
+      payment_status,
+      profiles(full_name),
+      sports_events(name,event_date)
+    `)
+    .order("id");
 
   if(error){
     msg("participantsMsg",error.message,"error");
@@ -712,19 +717,46 @@ async function loadParticipants(){
   if(!data || data.length===0){
     list.innerHTML = `
       <tr>
-        <td colspan="3">Belum ada peserta.</td>
+        <td colspan="5">Belum ada peserta.</td>
       </tr>
     `;
+
     msg("participantsMsg","");
     return;
   }
 
-  list.innerHTML=data.map((p,index)=>`
-    <tr>
-      <td>${index+1}</td>
-      <td>${esc(p.full_name||"-")}</td>
-    </tr>
-  `).join("");
+  list.innerHTML=data.map((r,index)=>{
+
+    const payment =
+      r.payment_status === "paid"
+        ? "✅ Lunas"
+        : "⏳ Belum Bayar";
+
+    return `
+      <tr>
+
+        <td>${index+1}</td>
+
+        <td>
+          ${esc(r.profiles?.full_name || "-")}
+        </td>
+
+        <td>
+          ${esc(r.sports_events?.name || "-")}
+        </td>
+
+        <td>
+          ${r.sports_events?.event_date || "-"}
+        </td>
+
+        <td>
+          ${payment}
+        </td>
+
+      </tr>
+    `;
+
+  }).join("");
 
   msg("participantsMsg","");
 }
