@@ -1057,7 +1057,7 @@ async function loadPayments(){
 
   const {data:regs,error:regError}=await db
     .from("registrations")
-    .select("member_id,event_id,payment_status,profiles(full_name),sports_events(name,fee,event_date)")
+   .select("id,member_id,event_id,payment_status,profiles(full_name),sports_events(name,fee,event_date)")
 
   if(regError){
     msg("paymentsMsg",regError.message,"error");
@@ -1108,6 +1108,19 @@ list.innerHTML=regs.map((r,index)=>{
           : "⏳ Belum Bayar"
         }
       </td>
+      <td>
+  ${
+    r.payment_status === "paid"
+      ? "—"
+      : `<button
+           class="btn primary"
+           type="button"
+           onclick="markPaymentPaid('${r.id}')"
+         >
+           ✅ Tandai Lunas
+         </button>`
+  }
+</td>
     </tr>
   `;
 }).join("");
@@ -1119,7 +1132,34 @@ $("paymentsUnpaid").textContent=rupiah(unpaid);
 msg("paymentsMsg","");
 
 }
- 
+ // ================= TANDAI PEMBAYARAN LUNAS =================
+
+async function markPaymentPaid(registrationId){
+
+  if(!registrationId) return;
+
+  const confirmed = confirm(
+    "Tandai pembayaran ini sebagai sudah lunas?"
+  );
+
+  if(!confirmed) return;
+
+  const {error} = await db
+    .from("registrations")
+    .update({
+      payment_status: "paid"
+    })
+    .eq("id", registrationId);
+
+  if(error){
+    alert("Gagal memperbarui pembayaran: " + error.message);
+    return;
+  }
+
+  alert("Pembayaran berhasil ditandai lunas.");
+
+  loadPayments();
+}
 // ================= LAPORAN =================
 
 async function loadReport(){
