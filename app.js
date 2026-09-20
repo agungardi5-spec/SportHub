@@ -383,17 +383,14 @@ window.toggleParticipants=async function(id){
 
   if(!el) return;
 
-  // Tutup jika sedang terbuka
   if(el.style.display==="block"){
     el.style.display="none";
     return;
   }
 
   el.style.display="block";
-
   el.innerHTML="<b>Memuat peserta...</b>";
 
-  // Ambil peserta kegiatan
   const {data:regs,error}=await db
     .from("registrations")
     .select(`
@@ -405,18 +402,19 @@ window.toggleParticipants=async function(id){
     .eq("event_id",id);
 
   if(error){
-    el.innerHTML=`<span style="color:#dc2626;">${esc(error.message)}</span>`;
+    el.innerHTML=
+      `<span style="color:#dc2626;">${esc(error.message)}</span>`;
     return;
   }
 
-  // Ambil data absensi
   const {data:attendance,error:attError}=await db
     .from("attendance")
     .select("member_id,status")
     .eq("event_id",id);
 
   if(attError){
-    el.innerHTML=`<span style="color:#dc2626;">${esc(attError.message)}</span>`;
+    el.innerHTML=
+      `<span style="color:#dc2626;">${esc(attError.message)}</span>`;
     return;
   }
 
@@ -425,12 +423,14 @@ window.toggleParticipants=async function(id){
   );
 
   if(!regs || regs.length===0){
-    el.innerHTML="<b>Peserta:</b><br><br>Belum ada peserta.";
+    el.innerHTML=
+      "<b>Peserta:</b><br><br>Belum ada peserta.";
     return;
   }
 
   el.innerHTML=`
     <b>Peserta:</b>
+
     ${regs.map(r=>{
 
       const payment =
@@ -438,18 +438,8 @@ window.toggleParticipants=async function(id){
           ? "💰 Lunas"
           : "⏳ Belum Bayar";
 
-      const attendanceStatus =
-        attendanceMap.get(r.member_id);
-
-      let attendanceText="❌ Belum Absen";
-
-      if(attendanceStatus==="present"){
-        attendanceText="✅ Hadir";
-      }else if(attendanceStatus==="excused"){
-        attendanceText="⏰ Izin";
-      }else if(attendanceStatus==="absent"){
-        attendanceText="❌ Tidak Hadir";
-      }
+      const status =
+        attendanceMap.get(r.member_id) || "absent";
 
       return `
         <div style="
@@ -465,28 +455,39 @@ window.toggleParticipants=async function(id){
         ">
 
           <span>
-            👤 ${esc(r.profiles?.full_name || "Member")}
+            👤 ${esc(r.profiles?.full_name || "Peserta")}
           </span>
 
           <span>
             ${payment}
           </span>
 
-          <span>
-            ${attendanceText}
-          </span>
+          <select
+            onchange="updateAttendanceFromManage('${id}','${r.member_id}',this.value)"
+            style="
+              padding:7px 10px;
+              border:1px solid #d8e3ef;
+              border-radius:8px;
+              background:#fff;
+            "
+          >
 
-          ${
-            r.payment_status==="paid"
-              ? ""
-              : `
-                <button
-                  class="btn light"
-                  onclick="paid('${r.id}')">
-                  Tandai Bayar
-                </button>
-              `
-          }
+            <option value="absent"
+              ${status==="absent"?"selected":""}>
+              ❌ Belum Hadir
+            </option>
+
+            <option value="present"
+              ${status==="present"?"selected":""}>
+              ✅ Hadir
+            </option>
+
+            <option value="excused"
+              ${status==="excused"?"selected":""}>
+              ⏰ Izin
+            </option>
+
+          </select>
 
         </div>
       `;
@@ -494,7 +495,31 @@ window.toggleParticipants=async function(id){
     }).join("")}
   `;
 };
+// ================= UPDATE ABSENSI DARI KELOLA =================
 
+window.updateAttendanceFromManage=async function(eventId,memberId,status){
+
+  if(!eventId || !memberId || !status) return;
+
+  const {error}=await db
+    .from("attendance")
+    .upsert(
+      {
+        event_id:eventId,
+        member_id:memberId,
+        status:status
+      },
+      {
+        onConflict:"event_id,member_id"
+      }
+    );
+
+  if(error){
+    alert("Gagal menyimpan absensi: " + error.message);
+    return;
+  }
+
+};
 window.deleteEvent=async id=>{
  if(!confirm("Hapus kegiatan ini beserta pendaftarnya?"))return;
 
