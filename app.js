@@ -1836,16 +1836,18 @@ async function loadUsers(){
 
       <td>${esc(u.username || "-")}</td>
 
-      <td>
-        ${u.role === "admin" ? "👑 Admin" : "👤 Member"}
-      </td>
+     <td>
+  <span class="role-badge ${u.role === "admin" ? "role-admin" : "role-member"}">
+    ${u.role === "admin" ? "👑 Admin" : "👤 Member"}
+  </span>
+</td>
 
       <td>
         <button
           class="btn light"
           onclick="changeUserRole('${u.id}','${u.role}')"
         >
-          🔄 Ubah Role
+          ${u.role === "admin" ? "👤 Jadikan Member" : "👑 Jadikan Admin"}
         </button>
       </td>
 
