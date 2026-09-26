@@ -1855,5 +1855,43 @@ async function loadUsers(){
 
   msg("usersMsg","");
 }
+async function changeUserRole(userId, currentRole){
 
+  if(!userId) return;
+
+  const newRole = currentRole === "admin"
+    ? "member"
+    : "admin";
+
+  const confirmed = confirm(
+    `Ubah role pengguna menjadi ${newRole === "admin" ? "Admin" : "Member"}?`
+  );
+
+  if(!confirmed) return;
+
+  const { error } = await db
+    .from("profiles")
+    .update({ role: newRole })
+    .eq("id", userId);
+
+  if(error){
+
+    msg(
+      "usersMsg",
+      "Gagal mengubah role: " + error.message,
+      "error"
+    );
+
+    return;
+  }
+
+  msg(
+    "usersMsg",
+    "Role berhasil diubah menjadi " +
+    (newRole === "admin" ? "Admin." : "Member."),
+    "success"
+  );
+
+  await loadUsers();
+}
 // ================= END MANAJEMEN PENGGUNA =================
