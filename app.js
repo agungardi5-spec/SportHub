@@ -63,8 +63,82 @@ async function loadMember(){
    </div>
   </div>`
  }).join(""):`<div class="empty">${memberTab==="mine"?"Belum ada olahraga yang diikuti.":"Belum ada kegiatan olahraga."}</div>`;
+ await loadMemberFinance();
 }
+async function loadMemberFinance(){
 
+  const incomeEl = $("memberIncome");
+  const expenseEl = $("memberExpense");
+  const balanceEl = $("memberBalance");
+  const listEl = $("memberExpenseList");
+
+  if(!incomeEl || !expenseEl || !balanceEl || !listEl) return;
+
+  // PEMASUKAN
+  const {data:regs,error:regError}=await db
+    .from("registrations")
+    .select("payment_status,sports_events(fee)");
+
+  if(regError){
+    console.error(regError);
+    return;
+  }
+
+  let income=0;
+
+  (regs||[]).forEach(r=>{
+    if(r.payment_status==="paid"){
+      income+=Number(r.sports_events?.fee||0);
+    }
+  });
+
+  // PENGELUARAN
+  const {data:expenses,error:expenseError}=await db
+    .from("expenses")
+    .select("expense_name,expense_date,amount,notes")
+    .order("expense_date",{ascending:false})
+    .order("id",{ascending:false});
+
+  if(expenseError){
+    console.error(expenseError);
+    return;
+  }
+
+  let expense=0;
+
+  (expenses||[]).forEach(e=>{
+    expense+=Number(e.amount||0);
+  });
+
+  // SALDO
+  const balance=income-expense;
+
+  incomeEl.textContent=rupiah(income);
+  expenseEl.textContent=rupiah(expense);
+  balanceEl.textContent=rupiah(balance);
+
+  // DAFTAR PENGELUARAN
+  if(!expenses||expenses.length===0){
+
+    listEl.innerHTML=`
+      <tr>
+        <td colspan="5">Belum ada data pengeluaran.</td>
+      </tr>
+    `;
+
+    return;
+  }
+
+  listEl.innerHTML=expenses.map((e,index)=>`
+    <tr>
+      <td>${index+1}</td>
+      <td>${e.expense_date||"-"}</td>
+      <td>${esc(e.expense_name||"-")}</td>
+      <td>${rupiah(Number(e.amount||0))}</td>
+      <td>${esc(e.notes||"-")}</td>
+    </tr>
+  `).join("");
+}
 window.join=async id=>{
  const {data:e}=await db.from("sports_events").select("*").eq("id",id).single();
  if(!e)return;
