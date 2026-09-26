@@ -41,7 +41,7 @@ async function loadProfile(u){
 
   await loadMember();
 }
-
+}
 async function loadMember(){
  const {data:events,error}=await db.from("sports_events").select("*").neq("status","cancelled").order("event_date").order("event_time");
  if(error){$("memberContent").innerHTML=`<div class="empty">${esc(error.message)}</div>`;return}
