@@ -1659,22 +1659,20 @@
 
     if(profile.role==="admin"){
 
-      if(adminSidebar) adminSidebar.style.display="";
-      if(memberSidebar) memberSidebar.style.display="none";
+      if(adminSidebar) adminSidebar.style.setProperty("display","block","important");
+      if(memberSidebar) memberSidebar.style.setProperty("display","none","important");
       if(memberPage) memberPage.hidden=true;
       if(adminPage) adminPage.hidden=false;
 
     }else{
 
-      if(adminSidebar) adminSidebar.style.display="none";
-      if(memberSidebar) memberSidebar.style.display="block";
+      if(adminSidebar) adminSidebar.style.setProperty("display","none","important");
+      if(memberSidebar) memberSidebar.style.setProperty("display","block","important");
       if(memberPage) memberPage.hidden=false;
       if(adminPage) adminPage.hidden=true;
 
       const name=document.getElementById("memberName");
       if(name) name.textContent=profile.full_name||"Member";
-
-      refreshMemberDashboard();
     }
   }
 
@@ -1702,7 +1700,33 @@
     showMemberView("mine","memberMineBtn");
   });
 
-   setTimeout(syncRoleUI,500);
+  const memberPage=document.getElementById("memberPage");
+  const adminPage=document.getElementById("adminPage");
+
+  // Sinkronkan sidebar setelah loadProfile selesai, tanpa bergantung pada timing login.
+  if(memberPage || adminPage){
+    const observer=new MutationObserver(()=>{
+      syncRoleUI();
+    });
+
+    if(memberPage){
+      observer.observe(memberPage,{
+        attributes:true,
+        attributeFilter:["hidden"]
+      });
+    }
+
+    if(adminPage){
+      observer.observe(adminPage,{
+        attributes:true,
+        attributeFilter:["hidden"]
+      });
+    }
+  }
+
+  setTimeout(syncRoleUI,500);
+  setTimeout(syncRoleUI,1500);
+  setTimeout(syncRoleUI,3000);
 
 })();
 
