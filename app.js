@@ -627,23 +627,21 @@ let email = loginInput;
 
 if(!loginInput.includes("@")){
 
-  const { data: userProfile, error: usernameError } = await db
-    .from("profiles")
-    .select("auth_email")
-    .eq("username", loginInput)
-    .maybeSingle();
+  const { data: authEmail, error: usernameError } = await db
+  .rpc("get_auth_email_by_username", {
+    p_username: loginInput
+  });
 
   if(usernameError){
     msg("authMsg", usernameError.message, "error");
     return;
   }
 
-  if(userProfile?.auth_email){
-    email = userProfile.auth_email;
-  } else {
-    msg("authMsg", "Username tidak ditemukan.", "error");
-    return;
-  }
+if(authEmail){
+  email = authEmail;
+} else {
+  msg("authMsg", "Username tidak ditemukan.", "error");
+  return;
 }
 
  msg("authMsg","Memproses...");
