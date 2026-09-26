@@ -224,9 +224,9 @@ list.forEach(r=>{
     gap:12px;
   ">
 
-    <div class="sport-title">
-      ⚽ ${esc(e.name)}
-    </div>
+ <div class="sport-title">
+  ${esc(e.name)}
+</div>
 
     <span class="badge ${
       e.status==="open" ? "" : "closed"
