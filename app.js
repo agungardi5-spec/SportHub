@@ -647,6 +647,7 @@ $("loginBtn").onclick=async()=>{
       msg("authMsg",usernameError.message,"error");
       return;
     }
+    }
 
     if(authEmail){
       email=authEmail;
