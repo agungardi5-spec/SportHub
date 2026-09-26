@@ -1709,3 +1709,78 @@ if($("paymentsBtn")){
 }
 
 // ================= END IURAN & PEMBAYARAN =================
+// ================= GANTI PASSWORD ADMIN =================
+
+$("changeAdminPasswordBtn").onclick = async () => {
+
+  const newPassword = $("newAdminPassword").value.trim();
+  const confirmPassword = $("confirmAdminPassword").value.trim();
+
+  if (!user) {
+    msg("changePasswordMsg", "Sesi login tidak ditemukan.", "error");
+    return;
+  }
+
+  if (!profile || profile.role !== "admin") {
+    msg("changePasswordMsg", "Fitur ini hanya untuk Administrator.", "error");
+    return;
+  }
+
+  if (newPassword.length < 6) {
+    msg(
+      "changePasswordMsg",
+      "Password minimal 6 karakter.",
+      "error"
+    );
+    return;
+  }
+
+  if (newPassword !== confirmPassword) {
+    msg(
+      "changePasswordMsg",
+      "Konfirmasi password tidak sama.",
+      "error"
+    );
+    return;
+  }
+
+  const button = $("changeAdminPasswordBtn");
+
+  button.disabled = true;
+  button.textContent = "⏳ Menyimpan...";
+
+  try {
+
+    const { error } = await db.auth.updateUser({
+      password: newPassword
+    });
+
+    if (error) throw error;
+
+    $("newAdminPassword").value = "";
+    $("confirmAdminPassword").value = "";
+
+    msg(
+      "changePasswordMsg",
+      "✅ Password Administrator berhasil diganti.",
+      "success"
+    );
+
+  } catch (e) {
+
+    msg(
+      "changePasswordMsg",
+      "Gagal mengganti password: " + (e.message || String(e)),
+      "error"
+    );
+
+  } finally {
+
+    button.disabled = false;
+    button.textContent = "🔒 Simpan Password";
+
+  }
+
+};
+
+// ================= END GANTI PASSWORD ADMIN =================
