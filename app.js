@@ -1168,6 +1168,7 @@ if(sectionId === "settings"){
     $("settingsName").textContent =
       profile.full_name || "Admin SportHub";
   }
+ loadUsers();
 }
   // ================= ACTIVE SIDEBAR =================
 
@@ -1784,3 +1785,75 @@ $("changeAdminPasswordBtn").onclick = async () => {
 };
 
 // ================= END GANTI PASSWORD ADMIN =================
+// ================= MANAJEMEN PENGGUNA =================
+
+async function loadUsers(){
+
+  const list = $("usersList");
+  if(!list) return;
+
+  list.innerHTML = `
+    <tr>
+      <td colspan="5">Memuat pengguna...</td>
+    </tr>
+  `;
+
+  const { data, error } = await db
+    .from("profiles")
+    .select("id, full_name, username, role")
+    .order("full_name", { ascending:true });
+
+  if(error){
+
+    list.innerHTML = `
+      <tr>
+        <td colspan="5">Gagal memuat pengguna.</td>
+      </tr>
+    `;
+
+    msg("usersMsg", error.message, "error");
+    return;
+  }
+
+  if(!data || data.length === 0){
+
+    list.innerHTML = `
+      <tr>
+        <td colspan="5">Belum ada pengguna.</td>
+      </tr>
+    `;
+
+    return;
+  }
+
+  list.innerHTML = data.map((u,index)=>`
+
+    <tr>
+
+      <td>${index + 1}</td>
+
+      <td>${esc(u.full_name || "-")}</td>
+
+      <td>${esc(u.username || "-")}</td>
+
+      <td>
+        ${u.role === "admin" ? "👑 Admin" : "👤 Member"}
+      </td>
+
+      <td>
+        <button
+          class="btn light"
+          onclick="changeUserRole('${u.id}','${u.role}')"
+        >
+          🔄 Ubah Role
+        </button>
+      </td>
+
+    </tr>
+
+  `).join("");
+
+  msg("usersMsg","");
+}
+
+// ================= END MANAJEMEN PENGGUNA =================
