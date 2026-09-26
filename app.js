@@ -240,10 +240,24 @@ list.forEach(r=>{
 </div>
 
     <span class="badge ${
-      e.status==="open" ? "" : "closed"
-    }">
-      ${e.status==="open" ? "DIBUKA" : "DITUTUP"}
-    </span>
+  new Date(
+    `${e.event_date}T${String(e.event_time).slice(0,5)}:00`
+  ) < new Date()
+    ? "finished"
+    : e.status==="open"
+      ? ""
+      : "closed"
+}">
+  ${
+    new Date(
+      `${e.event_date}T${String(e.event_time).slice(0,5)}:00`
+    ) < new Date()
+      ? "SELESAI"
+      : e.status==="open"
+        ? "DIBUKA"
+        : "DITUTUP"
+  }
+</span>
 
   </div>
 
