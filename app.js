@@ -620,44 +620,49 @@ window.deleteExpense=async id=>{
 };
 
 $("loginBtn").onclick=async()=>{
- const loginInput = $("loginEmail").value.trim().toLowerCase();
-const password = $("loginPassword").value;
+  const loginInput=$("loginEmail").value.trim().toLowerCase();
+  const password=$("loginPassword").value;
 
-let email = loginInput;
+  let email=loginInput;
 
-if(!loginInput.includes("@")){
+  if(!loginInput.includes("@")){
 
-  const { data: authEmail, error: usernameError } = await db
-  .rpc("get_auth_email_by_username", {
-    p_username: loginInput
-  });
+    const {data:authEmail,error:usernameError}=await db
+      .rpc("get_auth_email_by_username",{
+        p_username:loginInput
+      });
 
-  if(usernameError){
-    msg("authMsg", usernameError.message, "error");
-    return;
+    if(usernameError){
+      msg("authMsg",usernameError.message,"error");
+      return;
+    }
+
+    if(authEmail){
+      email=authEmail;
+    }else{
+      msg("authMsg","Username tidak ditemukan.","error");
+      return;
+    }
   }
 
-if(authEmail){
-  email = authEmail;
-} else {
-  msg("authMsg", "Username tidak ditemukan.", "error");
-  return;
-}
+  msg("authMsg","Memproses...");
 
- msg("authMsg","Memproses...");
+  try{
+    const {data,error}=await db.auth.signInWithPassword({
+      email,
+      password
+    });
 
- try{
-  const {data,error}=await db.auth.signInWithPassword({email,password});
+    if(error)throw error;
 
-  if(error)throw error;
+    if(data?.user){
+      await loadProfile(data.user);
+    }
 
-  if(data?.user)await loadProfile(data.user);
-
- }catch(e){
-  msg("authMsg",e.message||String(e),"error");
- }
+  }catch(e){
+    msg("authMsg",e.message||String(e),"error");
+  }
 };
-
 $("registerBtn").onclick=async()=>{
  const name=$("regName").value.trim();
 const username=$("regUsername").value.trim().toLowerCase();
