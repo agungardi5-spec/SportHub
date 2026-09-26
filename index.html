@@ -1479,6 +1479,16 @@
       mine:document.getElementById("memberActivitiesView"),
       finance:document.getElementById("memberFinanceView")
     };
+    const welcome=document.querySelector(".member-welcome");
+const summary=document.querySelector(".member-summary-grid");
+
+if(welcome){
+  welcome.style.display=view==="dashboard" ? "" : "none";
+}
+
+if(summary){
+  summary.style.display=view==="dashboard" ? "" : "none";
+}
 
     Object.values(views).forEach(el=>{
       if(el) el.classList.remove("active");
