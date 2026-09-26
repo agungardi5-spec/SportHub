@@ -1700,30 +1700,8 @@
     showMemberView("mine","memberMineBtn");
   });
 
-  const memberPage=document.getElementById("memberPage");
-  const adminPage=document.getElementById("adminPage");
-
-  // Sinkronkan sidebar setelah loadProfile selesai, tanpa bergantung pada timing login.
-  if(memberPage || adminPage){
-    const observer=new MutationObserver(()=>{
-      syncRoleUI();
-    });
-
-    if(memberPage){
-      observer.observe(memberPage,{
-        attributes:true,
-        attributeFilter:["hidden"]
-      });
-    }
-
-    if(adminPage){
-      observer.observe(adminPage,{
-        attributes:true,
-        attributeFilter:["hidden"]
-      });
-    }
-  }
-
+  // Sinkronkan tampilan setelah proses login selesai.
+  // Tidak memakai MutationObserver agar tidak terjadi loop perubahan hidden.
   setTimeout(syncRoleUI,500);
   setTimeout(syncRoleUI,1500);
   setTimeout(syncRoleUI,3000);
