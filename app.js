@@ -29,8 +29,18 @@ async function loadProfile(u){
 
   await loadAdmin();
 
-}else{
+} else {
 
+  $("adminSidebar").style.display="none";
+  $("memberSidebar").style.display="block";
+
+  $("memberPage").hidden=false;
+  $("adminPage").hidden=true;
+
+  $("memberName").textContent=p.full_name;
+
+  await loadMember();
+}
   $("adminSidebar").style.display="none";
   $("memberSidebar").style.display="block";
 
