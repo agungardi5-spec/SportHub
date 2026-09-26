@@ -620,12 +620,31 @@ window.deleteExpense=async id=>{
 };
 
 $("loginBtn").onclick=async()=>{
- const loginInput=$("loginEmail").value.trim().toLowerCase();
-const password=$("loginPassword").value;
+ const loginInput = $("loginEmail").value.trim().toLowerCase();
+const password = $("loginPassword").value;
 
-const email = loginInput.includes("@")
-  ? loginInput
-  : loginInput + "@sporthub.local";
+let email = loginInput;
+
+if(!loginInput.includes("@")){
+
+  const { data: userProfile, error: usernameError } = await db
+    .from("profiles")
+    .select("auth_email")
+    .eq("username", loginInput)
+    .maybeSingle();
+
+  if(usernameError){
+    msg("authMsg", usernameError.message, "error");
+    return;
+  }
+
+  if(userProfile?.auth_email){
+    email = userProfile.auth_email;
+  } else {
+    msg("authMsg", "Username tidak ditemukan.", "error");
+    return;
+  }
+}
 
  msg("authMsg","Memproses...");
 
