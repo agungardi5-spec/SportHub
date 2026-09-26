@@ -775,87 +775,25 @@
         </div>
 
 
-        <!-- ================= CONTENT GRID ================= -->
+                <!-- ================= CONTENT GRID ================= -->
 
         <div class="dashboard-grid">
 
+          <!-- ================= JADWAL TERDEKAT ================= -->
 
-          <!-- JENIS OLAHRAGA -->
-
-          <div class="dashboard-card">
-
-            <div class="card-header">
-
-              <h2>Jenis Olahraga</h2>
-
-              <span>Lihat Semua</span>
-
-            </div>
-
-            <div class="sport-grid">
-
-              <div class="sport-box blue-box">
-                <strong>🏃</strong>
-                <b>Lari</b>
-                <small>Peserta</small>
-              </div>
-
-              <div class="sport-box green-box">
-                <strong>🚴</strong>
-                <b>Sepeda</b>
-                <small>Peserta</small>
-              </div>
-
-              <div class="sport-box orange-box">
-                <strong>🏸</strong>
-                <b>Badminton</b>
-                <small>Peserta</small>
-              </div>
-
-              <div class="sport-box red-box">
-                <strong>⚽</strong>
-                <b>Futsal</b>
-                <small>Peserta</small>
-              </div>
-
-              <div class="sport-box purple-box">
-                <strong>🏋️</strong>
-                <b>Gym</b>
-                <small>Peserta</small>
-              </div>
-
-              <div class="sport-box orange-box">
-                <strong>🏀</strong>
-                <b>Basket</b>
-                <small>Peserta</small>
-              </div>
-
-              <div class="sport-box green-box">
-                <strong>🎾</strong>
-                <b>Tenis</b>
-                <small>Peserta</small>
-              </div>
-
-              <div class="sport-box pink-box">
-                <strong>🧘</strong>
-                <b>Yoga</b>
-                <small>Peserta</small>
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <!-- JADWAL -->
-
-          <div class="dashboard-card">
+          <div class="dashboard-card dashboard-schedule-card">
 
             <div class="card-header">
 
-              <h2>Jadwal Olahraga Terdekat</h2>
+              <div>
+                <h2>📅 Jadwal Olahraga Terdekat</h2>
 
-              <span>Lihat Semua</span>
+                <p class="dashboard-subtitle">
+                  Kegiatan olahraga yang akan datang
+                </p>
+              </div>
+
+              <span class="dashboard-label">TERBARU</span>
 
             </div>
 
@@ -864,71 +802,72 @@
           </div>
 
 
-          <!-- PEMBAYARAN -->
+          <!-- ================= PEMBAYARAN ================= -->
 
           <div class="dashboard-card payment-card">
 
             <div class="card-header">
 
-              <h2>Pembayaran Iuran</h2>
+              <div>
+                <h2>💰 Pembayaran Iuran</h2>
+
+                <p class="dashboard-subtitle">
+                  Ringkasan pembayaran anggota
+                </p>
+              </div>
 
               <select id="financeEventFilter">
-                <option value="all">
-                  Semua Kegiatan
-                </option>
+                <option value="all">Semua Kegiatan</option>
               </select>
 
             </div>
 
+
             <div class="payment-circle">
 
               <div>
-                <strong id="paymentPercent">
-                  0%
-                </strong>
+                <strong id="paymentPercent">0%</strong>
 
                 <span>Terkumpul</span>
               </div>
 
             </div>
 
+
             <div class="payment-data">
 
               <div>
                 <span>Total Tagihan</span>
-                <strong id="financeTotal">
-                  Rp 0
-                </strong>
+
+                <strong id="financeTotal">Rp 0</strong>
               </div>
+
 
               <div>
                 <span>Sudah Dibayar</span>
-                <strong id="financePaid">
-                  Rp 0
-                </strong>
+
+                <strong id="financePaid">Rp 0</strong>
               </div>
+
 
               <div>
                 <span>Belum Dibayar</span>
-                <strong id="financeUnpaid">
-                  Rp 0
-                </strong>
+
+                <strong id="financeUnpaid">Rp 0</strong>
               </div>
+
 
               <div>
                 <span>Total Peserta</span>
-                <strong id="financePeople">
-                  0
-                </strong>
+
+                <strong id="financePeople">0</strong>
               </div>
 
             </div>
 
           </div>
 
-
         </div>
-
 
         <!-- ================= CREATE EVENT ================= -->
 
