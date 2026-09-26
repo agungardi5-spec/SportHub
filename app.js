@@ -17,6 +17,7 @@ async function loadProfile(u){
  $("appPage").hidden=false;
  window.scrollTo(0,0);
  $("headerName").textContent=p.full_name;
+ $("headerRole").textContent = p.role === "admin" ? "Admin" : "Member";
 
  if(p.role==="admin"){
   $("adminPage").hidden=false;
