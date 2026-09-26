@@ -1982,3 +1982,135 @@ button {
   color: #123d6b;
   font-size: 15px;
 }
+/* =========================================
+   MEMBER - TRANSPARANSI KEUANGAN
+   ========================================= */
+
+#memberFinanceView {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#memberFinanceView table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+  margin-top: 18px;
+  background: #fff;
+  border: 1px solid #e1e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Lebar masing-masing kolom */
+#memberFinanceView table th:nth-child(1) {
+  width: 7%;
+}
+
+#memberFinanceView table th:nth-child(2) {
+  width: 18%;
+}
+
+#memberFinanceView table th:nth-child(3) {
+  width: 25%;
+}
+
+#memberFinanceView table th:nth-child(4) {
+  width: 18%;
+}
+
+#memberFinanceView table th:nth-child(5) {
+  width: 32%;
+}
+
+/* Header */
+#memberFinanceView table th {
+  padding: 14px 16px;
+  background: #f4f7fb;
+  color: #123d6b;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: left;
+  border-bottom: 1px solid #dfe7f0;
+}
+
+/* Isi tabel */
+#memberFinanceView table td {
+  padding: 14px 16px;
+  color: #334155;
+  font-size: 14px;
+  border-bottom: 1px solid #edf1f5;
+  vertical-align: middle;
+  word-break: break-word;
+}
+
+/* Nomor */
+#memberFinanceView table th:first-child,
+#memberFinanceView table td:first-child {
+  text-align: center;
+}
+
+/* Nominal */
+#memberFinanceView table th:nth-child(4),
+#memberFinanceView table td:nth-child(4) {
+  text-align: right;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Baris terakhir */
+#memberFinanceView table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Efek hover */
+#memberFinanceView table tbody tr:hover {
+  background: #f8fbff;
+}
+
+/* =========================================
+   RINGKASAN KEUANGAN
+   ========================================= */
+
+#memberFinanceView .finance-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 20px 0 26px;
+}
+
+#memberFinanceView .finance-summary > div {
+  padding: 18px;
+  background: #f8fafc;
+  border: 1px solid #e1e8f0;
+  border-radius: 12px;
+}
+
+#memberFinanceView .finance-summary strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 20px;
+  color: #123d6b;
+}
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 800px) {
+
+  #memberFinanceView table {
+    table-layout: auto;
+  }
+
+  #memberFinanceView table th,
+  #memberFinanceView table td {
+    padding: 10px 8px;
+    font-size: 13px;
+  }
+
+  #memberFinanceView .finance-summary {
+    grid-template-columns: 1fr;
+  }
+}
