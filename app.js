@@ -20,15 +20,26 @@ async function loadProfile(u){
  $("headerRole").textContent = p.role === "admin" ? "Admin" : "Member";
 
  if(p.role==="admin"){
+
+  $("adminSidebar").style.display="";
+  $("memberSidebar").style.display="none";
+
   $("adminPage").hidden=false;
   $("memberPage").hidden=true;
+
   await loadAdmin();
- } else {
-  $("memberPage").hidden=false;
+
+}else{
+
+  $("adminSidebar").style.display="none";
+  $("memberSidebar").style.display="block";
+
   $("adminPage").hidden=true;
+  $("memberPage").hidden=false;
+
   $("memberName").textContent=p.full_name;
+
   await loadMember();
- }
 }
 
 async function loadMember(){
