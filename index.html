@@ -1702,20 +1702,7 @@
     showMemberView("mine","memberMineBtn");
   });
 
-  const memberPage=document.getElementById("memberPage");
-
-  if(memberPage){
-
-    const observer=new MutationObserver(syncRoleUI);
-
-    observer.observe(memberPage,{
-      attributes:true,
-      attributeFilter:["hidden"]
-    });
-  }
-
-  setTimeout(syncRoleUI,500);
-  setTimeout(syncRoleUI,1500);
+   setTimeout(syncRoleUI,500);
 
 })();
 
