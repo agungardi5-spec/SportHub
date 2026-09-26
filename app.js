@@ -50,7 +50,7 @@ async function loadMember(){
   return `<div class="event-card">
    <div class="event-top">
     <div>
-     <div class="sport-title">⚽ ${esc(e.name)}</div>
+     <div class="sport-title">${esc(e.name)}</div>
      <div class="event-info">📅 ${e.event_date} &nbsp; ⏰ ${String(e.event_time).slice(0,5)}<br>📍 ${esc(e.location)}</div>
     </div>
     <span class="badge ${e.status!=="open"?"closed":""}">${e.status==="open"?"DIBUKA":"DITUTUP"}</span>
