@@ -2298,3 +2298,84 @@ button {
   }
 
 }
+/* =========================================================
+   ADMIN DASHBOARD - COMPACT EVENT LIST
+   ========================================================= */
+
+#adminPage .dashboard-schedule-card {
+  min-height: 0;
+}
+
+#adminPage .dashboard-schedule-card #adminList {
+  padding: 0 18px 18px;
+  max-height: 520px;
+  overflow-y: auto;
+}
+
+/* Scrollbar jadwal */
+#adminPage .dashboard-schedule-card #adminList::-webkit-scrollbar {
+  width: 6px;
+}
+
+#adminPage .dashboard-schedule-card #adminList::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+#adminPage .dashboard-schedule-card #adminList::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+
+/* Kartu event */
+#adminPage .dashboard-schedule-card #adminList .event-card {
+  padding: 13px 15px !important;
+  margin-bottom: 9px !important;
+  border-radius: 12px;
+  gap: 9px !important;
+}
+
+
+/* Judul event */
+#adminPage .dashboard-schedule-card #adminList .event-card h3 {
+  font-size: 16px;
+  margin: 0;
+}
+
+
+/* Informasi event */
+#adminPage .dashboard-schedule-card #adminList .event-card .event-info {
+  gap: 8px !important;
+}
+
+#adminPage .dashboard-schedule-card #adminList .event-card .event-info > div {
+  font-size: 13px;
+}
+
+
+/* Peserta & pembayaran */
+#adminPage .dashboard-schedule-card #adminList .event-card .event-participants {
+  font-size: 13px;
+  margin-top: 2px;
+}
+
+
+/* Tombol */
+#adminPage .dashboard-schedule-card #adminList .event-card .event-actions {
+  gap: 7px !important;
+  margin-top: 2px;
+}
+
+#adminPage .dashboard-schedule-card #adminList .event-card button {
+  padding: 7px 10px;
+  font-size: 11px;
+  border-radius: 7px;
+}
+
+
+/* Pada layar desktop, tampilkan lebih banyak jadwal */
+@media (min-width: 1101px) {
+  #adminPage .dashboard-schedule-card #adminList {
+    max-height: 500px;
+  }
+}
