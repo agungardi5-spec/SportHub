@@ -2403,3 +2403,10 @@ button {
   background: #f1f5f9;
   border: 1px solid #cbd5e1;
 }
+/* =========================================================
+   SEMBUNYIKAN JADWAL SELESAI DARI JADWAL TERDEKAT
+   ========================================================= */
+
+#adminPage .dashboard-schedule-card .event-card:has(.badge.finished) {
+  display: none !important;
+}
