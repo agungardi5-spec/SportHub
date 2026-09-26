@@ -41,16 +41,6 @@ async function loadProfile(u){
 
   await loadMember();
 }
-  $("adminSidebar").style.display="none";
-  $("memberSidebar").style.display="block";
-
-  $("adminPage").hidden=true;
-  $("memberPage").hidden=false;
-
-  $("memberName").textContent=p.full_name;
-
-  await loadMember();
-}
 }
 async function loadMember(){
  const {data:events,error}=await db.from("sports_events").select("*").neq("status","cancelled").order("event_date").order("event_time");
@@ -647,7 +637,6 @@ $("loginBtn").onclick=async()=>{
   let email=loginInput;
 
   if(!loginInput.includes("@")){
-
     const {data:authEmail,error:usernameError}=await db
       .rpc("get_auth_email_by_username",{
         p_username:loginInput
@@ -656,7 +645,6 @@ $("loginBtn").onclick=async()=>{
     if(usernameError){
       msg("authMsg",usernameError.message,"error");
       return;
-    }
     }
 
     if(authEmail){
@@ -675,12 +663,11 @@ $("loginBtn").onclick=async()=>{
       password
     });
 
-    if(error)throw error;
+    if(error) throw error;
 
     if(data?.user){
       await loadProfile(data.user);
     }
-
   }catch(e){
     msg("authMsg",e.message||String(e),"error");
   }
@@ -1941,4 +1928,3 @@ async function changeUserRole(userId, currentRole){
   await loadUsers();
 }
 // ================= END MANAJEMEN PENGGUNA =================
-}
