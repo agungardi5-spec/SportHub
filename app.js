@@ -1880,7 +1880,7 @@ async function loadUsers(){
 
     list.innerHTML = `
       <tr>
-        <td colspan="5">Belum ada pengguna.</td>
+        <td colspan="6">Belum ada pengguna.</td>
       </tr>
     `;
 
