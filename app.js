@@ -1240,6 +1240,7 @@ if(sectionId === "settings"){
 
   if(activeButton){
     activeButton.classList.add("active");
+
   }
 
 }
@@ -1860,7 +1861,7 @@ async function loadUsers(){
 
   const { data, error } = await db
     .from("profiles")
-    .select("id, full_name, username, role")
+    .select("id,full_name,username,role,is_active")
     .order("full_name", { ascending:true });
 
   if(error){
@@ -1902,6 +1903,12 @@ async function loadUsers(){
   </span>
 </td>
 
+<td>
+  <span class="status-badge ${u.is_active ? "status-active" : "status-inactive"}">
+    ${u.is_active ? "🟢 Aktif" : "🔴 Nonaktif"}
+  </span>
+</td>
+
       <td>
         <button
           class="btn light"
@@ -1909,7 +1916,16 @@ async function loadUsers(){
         >
           ${u.role === "admin" ? "👤 Jadikan Member" : "👑 Jadikan Admin"}
         </button>
-      </td>
+      
+
+<button
+  class="btn light"
+  onclick="toggleUserActive('${u.id}', ${u.is_active})"
+>
+  ${u.is_active ? "🔴 Nonaktifkan" : "🟢 Aktifkan"}
+</button>
+
+</td>
 
     </tr>
 
@@ -1951,6 +1967,39 @@ async function changeUserRole(userId, currentRole){
     "usersMsg",
     "Role berhasil diubah menjadi " +
     (newRole === "admin" ? "Admin." : "Member."),
+    "success"
+  );
+
+  await loadUsers();
+}
+async function toggleUserActive(userId, currentStatus){
+  if(!userId) return;
+
+  const newStatus = !currentStatus;
+
+  const confirmed = confirm(
+    newStatus
+      ? "Aktifkan kembali pengguna ini?"
+      : "Nonaktifkan pengguna ini?"
+  );
+
+  if(!confirmed) return;
+
+  const { error } = await db
+    .from("profiles")
+    .update({ is_active: newStatus })
+    .eq("id", userId);
+
+  if(error){
+    msg("usersMsg", error.message, "error");
+    return;
+  }
+
+  msg(
+    "usersMsg",
+    newStatus
+      ? "Pengguna berhasil diaktifkan."
+      : "Pengguna berhasil dinonaktifkan.",
     "success"
   );
 
