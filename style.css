@@ -2511,3 +2511,16 @@ button {
 #adminPage .dashboard-schedule-card #adminList .event-card .event-info > div:first-child strong {
   white-space: nowrap;
 }
+/* ================= TANGGAL TIDAK TERPOTONG ================= */
+
+#adminPage .dashboard-schedule-card #adminList .event-card .event-info > div:first-child {
+  flex: 0 0 205px;
+  min-width: 205px;
+}
+
+#adminPage .dashboard-schedule-card #adminList .event-card .event-info > div:first-child strong {
+  display: inline-block;
+  white-space: nowrap !important;
+  word-break: keep-all !important;
+  overflow: visible !important;
+}
