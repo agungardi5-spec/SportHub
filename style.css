@@ -2425,3 +2425,55 @@ button {
 
   text-shadow: 0 3px 12px rgba(0, 110, 220, 0.18);
 }
+/* ================= BACKGROUND MOTIF TITIK KUMPUL ================= */
+
+#appPage {
+  background:
+    radial-gradient(circle at 8% 15%, rgba(37, 150, 255, 0.10) 0, transparent 22%),
+    radial-gradient(circle at 92% 85%, rgba(0, 196, 255, 0.08) 0, transparent 24%),
+    linear-gradient(135deg, #eef6ff 0%, #f7fbff 48%, #eaf4ff 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Garis diagonal halus */
+#appPage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.45;
+
+  background:
+    repeating-linear-gradient(
+      135deg,
+      transparent 0,
+      transparent 110px,
+      rgba(37, 150, 255, 0.055) 111px,
+      rgba(37, 150, 255, 0.055) 113px,
+      transparent 114px,
+      transparent 220px
+    );
+}
+
+/* Motif lingkaran / gelombang */
+#appPage::after {
+  content: "";
+  position: absolute;
+  width: 650px;
+  height: 650px;
+  right: -300px;
+  bottom: -300px;
+  border: 70px solid rgba(37, 150, 255, 0.035);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 55px rgba(37, 150, 255, 0.025),
+    0 0 0 120px rgba(37, 150, 255, 0.018);
+  pointer-events: none;
+}
+
+/* Isi aplikasi tetap berada di atas motif */
+#appPage > * {
+  position: relative;
+  z-index: 1;
+}
