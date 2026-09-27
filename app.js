@@ -272,7 +272,7 @@ if(
   <!-- INFORMASI -->
   <div style="
     display:grid;
-    grid-template-columns:repeat(4,minmax(0,1fr));
+    grid-template-columns:1.35fr 1fr 1fr 1.15fr;
     gap:12px;
   ">
 
