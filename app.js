@@ -216,7 +216,13 @@ list.forEach(r=>{
     unpaidMoney+=e.fee;
   }
 });
-
+if(
+  new Date(
+    `${e.event_date}T${String(e.event_time).slice(0,5)}:00`
+  ) <= new Date()
+){
+  return "";
+}
  return `
   <div class="event-card"
   style="
