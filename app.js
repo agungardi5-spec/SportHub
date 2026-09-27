@@ -1,5 +1,6 @@
 const {createClient}=supabase; const db=createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let user=null, profile=null, memberTab="available";
+let adminView="dashboard";
 const $=id=>document.getElementById(id);
 const rupiah=n=>new Intl.NumberFormat("id-ID",{style:"currency",currency:"IDR",maximumFractionDigits:0}).format(n||0);
 const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
@@ -217,6 +218,7 @@ list.forEach(r=>{
   }
 });
 if(
+  adminView === "dashboard" &&
   new Date(
     `${e.event_date}T${String(e.event_time).slice(0,5)}:00`
   ) <= new Date()
@@ -1074,6 +1076,8 @@ function loadSports(){
 // ================= NAVIGASI ADMIN =================
 
 function showAdminSection(sectionId, buttonId){
+  const previousAdminView = adminView;
+  adminView = sectionId === "schedule" ? "schedule" : "dashboard";
 
   const dashboard = $("adminPage");
 
@@ -1105,8 +1109,12 @@ function showAdminSection(sectionId, buttonId){
         el.style.display="";
       }
     });
-
+   
+    if(previousAdminView === "schedule"){
+    loadAdmin();
   }
+
+}
 
   // ================= PESERTA =================
   if(sectionId === "participants"){
@@ -1195,6 +1203,7 @@ if(sectionId === "schedule"){
   if(createEvent){
     createEvent.style.display="block";
   }
+ loadAdmin();
 
 }
 // ================= JENIS OLAHRAGA =================
