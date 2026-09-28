@@ -2694,3 +2694,28 @@ button {
     width:calc(100vw - 24px);
   }
 }
+
+/* ================= FIX NOTIFIKASI PALING DEPAN ================= */
+
+header.sports-header{
+  position:relative !important;
+  z-index:999999 !important;
+}
+
+.notification-wrap{
+  position:relative !important;
+  z-index:1000000 !important;
+}
+
+.notification-panel{
+  position:fixed !important;
+  top:68px !important;
+  right:24px !important;
+  z-index:2147483647 !important;
+}
+
+/* Pastikan dashboard tidak menutupi notifikasi */
+.member-welcome{
+  position:relative;
+  z-index:1 !important;
+}
