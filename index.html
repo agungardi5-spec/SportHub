@@ -1887,20 +1887,18 @@ const upcomingEvents = (events || []).filter(e => {
         error:registrationError
       } = await db
         .from("registrations")
-        .select(`
-          id,
-          event_id,
-          payment_status,
-          created_at,
-          sports_events(
-            name,
-            event_date,
-            event_time
-          )
-        `)
-        .eq("member_id",userId)
-        .order("created_at",{ascending:false})
-        .limit(30);
+       .select(`
+  id,
+  event_id,
+  payment_status,
+  sports_events(
+    name,
+    event_date,
+    event_time
+  )
+`)
+.eq("member_id",userId)
+.limit(30);
 
       if(registrationError){
         throw registrationError;
@@ -1922,7 +1920,7 @@ const upcomingEvents = (events || []).filter(e => {
           title:"Pendaftaran berhasil",
           text:
             `Kamu terdaftar pada ${eventName}.`,
-          time:reg.created_at || ""
+          time:reg.sports_events?.event_date || ""
         });
 
 
@@ -1936,7 +1934,7 @@ const upcomingEvents = (events || []).filter(e => {
             title:"Pembayaran berhasil",
             text:
               `Pembayaran ${eventName} sudah tercatat.`,
-            time:reg.created_at || ""
+            time:reg.sports_events?.event_date || ""
           });
 
         }else{
@@ -1947,7 +1945,7 @@ const upcomingEvents = (events || []).filter(e => {
             title:"Pembayaran belum selesai",
             text:
               `Iuran untuk ${eventName} masih belum dibayar.`,
-            time:reg.created_at || ""
+            time:reg.sports_events?.event_date || ""
           });
 
         }
