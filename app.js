@@ -41,7 +41,12 @@ async function loadProfile(u){
   $("memberName").textContent=p.full_name;
 
   await loadMember();
-  requestNotificationPermission();
+await requestNotificationPermission();
+
+showBrowserNotification(
+  "TITIK KUMPUL",
+  "Notifikasi berhasil diaktifkan! 🔔"
+);
 }
 }
 async function loadMember(){
@@ -2045,9 +2050,5 @@ function showBrowserNotification(title, body){
   }
 }
 
-showBrowserNotification(
-  "TITIK KUMPUL",
-  "Notifikasi berhasil diaktifkan! 🔔"
-);
 // ================= END NOTIFIKASI BROWSER =================
 
