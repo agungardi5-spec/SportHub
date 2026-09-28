@@ -41,6 +41,7 @@ async function loadProfile(u){
   $("memberName").textContent=p.full_name;
 
   await loadMember();
+  requestNotificationPermission();
 }
 }
 async function loadMember(){
@@ -2017,3 +2018,31 @@ async function toggleUserActive(userId, currentStatus){
   await loadUsers();
 }
 // ================= END MANAJEMEN PENGGUNA =================
+// ================= NOTIFIKASI BROWSER =================
+async function requestNotificationPermission(){
+  if(!("Notification" in window)) return false;
+
+  if(Notification.permission === "granted"){
+    return true;
+  }
+
+  if(Notification.permission === "denied"){
+    return false;
+  }
+
+  const permission = await Notification.requestPermission();
+  return permission === "granted";
+}
+
+function showBrowserNotification(title, body){
+  if(!("Notification" in window)) return;
+
+  if(Notification.permission === "granted"){
+    new Notification(title, {
+      body: body,
+      icon: "icon-192.png"
+    });
+  }
+}
+// ================= END NOTIFIKASI BROWSER =================
+
