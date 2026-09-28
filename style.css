@@ -2583,9 +2583,9 @@ button {
 }
 
 .notification-panel{
-  position:absolute;
-  top:52px;
-  right:0;
+  position:fixed;
+  top:70px;
+  right:24px;
   width:360px;
   max-width:calc(100vw - 30px);
   background:#fff;
@@ -2594,7 +2594,7 @@ button {
   border-radius:16px;
   box-shadow:0 18px 45px rgba(15,45,80,.22);
   overflow:hidden;
-  z-index:10002;
+  z-index:999999;
   display:none;
 }
 
