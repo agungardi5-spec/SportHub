@@ -2132,4 +2132,3 @@ function showBrowserNotification(title, body){
 }
 
 // ================= END NOTIFIKASI BROWSER =================
-})();
