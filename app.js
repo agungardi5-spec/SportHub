@@ -41,6 +41,7 @@ async function loadProfile(u){
   $("memberName").textContent=p.full_name;
 
   await loadMember();
+
 await requestNotificationPermission();
 
 showBrowserNotification(
