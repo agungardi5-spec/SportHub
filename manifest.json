@@ -1,1 +1,31 @@
-{"name":"SportHub","short_name":"SportHub","start_url":"./index.html","display":"standalone","background_color":"#f3f6fa","theme_color":"#111827"}
+{
+  "name": "Titik Kumpul",
+  "short_name": "Titik Kumpul",
+  "description": "Platform olahraga untuk menemukan kegiatan, bergabung, dan tetap aktif bersama.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f3f6fa",
+  "theme_color": "#123d6b",
+  "lang": "id",
+  "categories": [
+    "sports",
+    "fitness",
+    "social"
+  ],
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
