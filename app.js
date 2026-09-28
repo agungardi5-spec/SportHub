@@ -2044,5 +2044,10 @@ function showBrowserNotification(title, body){
     });
   }
 }
+
+showBrowserNotification(
+  "TITIK KUMPUL",
+  "Notifikasi berhasil diaktifkan! 🔔"
+);
 // ================= END NOTIFIKASI BROWSER =================
 
