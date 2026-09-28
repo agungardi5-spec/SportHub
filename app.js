@@ -1986,7 +1986,15 @@ async function changeUserRole(userId, currentRole){
 
     return;
   }
+  msg(
+    "usersMsg",
+    "Role berhasil diubah menjadi " +
+    (newRole === "admin" ? "Admin." : "Member."),
+    "success"
+  );
 
+  await loadUsers();
+}
  async function deleteUser(userId, userName){
 
   if(!userId) return;
