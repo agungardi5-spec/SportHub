@@ -1887,14 +1887,16 @@ const upcomingEvents = (events || []).filter(e => {
         error:registrationError
       } = await db
         .from("registrations")
-       .select(`
+   .select(`
   id,
   event_id,
   payment_status,
   sports_events(
     name,
     event_date,
-    event_time
+    event_time,
+    location,
+    status
   )
 `)
 .eq("member_id",userId)
@@ -1910,6 +1912,34 @@ const upcomingEvents = (events || []).filter(e => {
         const eventName =
           reg.sports_events?.name ||
           "kegiatan olahraga";
+        const eventDate =
+  reg.sports_events?.event_date || "";
+
+const eventTime =
+  reg.sports_events?.event_time || "";
+
+const eventLocation =
+  reg.sports_events?.location ||
+  "lokasi kegiatan";
+
+const eventStatus =
+  reg.sports_events?.status || "";
+        /* Kegiatan dibatalkan */
+
+if(eventStatus === "cancelled"){
+
+  addNotification(items,{
+    id:`cancelled-${reg.id}`,
+    icon:"❌",
+    title:"Kegiatan dibatalkan",
+    text:
+      `${eventName} yang kamu ikuti telah dibatalkan.`,
+    time:eventDate
+  });
+
+  return;
+}
+
 
 
         /* Pendaftaran berhasil */
@@ -1925,6 +1955,36 @@ const upcomingEvents = (events || []).filter(e => {
 
 
         /* Pembayaran */
+
+        /* Pengingat H-1 */
+
+if(eventDate){
+
+  const today = new Date();
+  today.setHours(0,0,0,0);
+
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
+  const tomorrowText =
+    tomorrow.toISOString().slice(0,10);
+
+  if(eventDate === tomorrowText){
+
+    addNotification(items,{
+      id:`reminder-${reg.id}-${eventDate}`,
+      icon:"⏰",
+      title:"Pengingat olahraga besok",
+      text:
+        `${eventName} berlangsung besok ` +
+        `${formatTime(eventTime)} ` +
+        `di ${eventLocation}.`,
+      time:eventDate
+    });
+
+  }
+
+}
 
         if(reg.payment_status === "paid"){
 
