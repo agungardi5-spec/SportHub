@@ -46,6 +46,15 @@ async function loadProfile(u){
 async function loadMember(){
  const {data:events,error}=await db.from("sports_events").select("*").neq("status","cancelled").order("event_date").order("event_time");
  if(error){$("memberContent").innerHTML=`<div class="empty">${esc(error.message)}</div>`;return}
+ const now = new Date();
+
+const upcomingEvents = (events || []).filter(e => {
+  const eventDateTime = new Date(
+    `${e.event_date}T${String(e.event_time).slice(0,5)}:00`
+  );
+
+  return eventDateTime > now;
+});
 
  const {data:regs}=await db.from("registrations").select("event_id,payment_status").eq("member_id",user.id);
  const joined=new Map((regs||[]).map(r=>[r.event_id,r]));
@@ -54,7 +63,9 @@ async function loadMember(){
  const counts={};
  (all||[]).forEach(r=>counts[r.event_id]=(counts[r.event_id]||0)+1);
 
- const list=memberTab==="mine"?(events||[]).filter(e=>joined.has(e.id)):(events||[]);
+ const list = memberTab === "mine"
+  ? upcomingEvents.filter(e => joined.has(e.id))
+  : upcomingEvents;
 
  $("memberContent").innerHTML=list.length?list.map(e=>{
   const r=joined.get(e.id), count=counts[e.id]||0, full=count>=e.capacity&&!r;
