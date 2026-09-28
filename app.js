@@ -1991,7 +1991,6 @@ async function changeUserRole(userId, currentRole){
 
   if(!userId) return;
 
-  /* Jangan hapus akun sendiri */
   if(
     typeof user !== "undefined" &&
     user &&
@@ -2003,7 +2002,7 @@ async function changeUserRole(userId, currentRole){
 
   const confirmed = confirm(
     `Hapus pengguna "${userName || "Pengguna"}"?\n\n` +
-    `Akun login dan data profil pengguna akan dihapus.\n` +
+    `Akun login dan profil pengguna akan dihapus.\n` +
     `Tindakan ini tidak dapat dibatalkan.`
   );
 
@@ -2011,17 +2010,25 @@ async function changeUserRole(userId, currentRole){
 
   try{
 
-    /*
-     * Gunakan Edge Function admin-users
-     * agar akun Auth juga ikut dihapus.
-     */
+    const { data: sessionData } =
+      await db.auth.getSession();
+
+    const accessToken =
+      sessionData?.session?.access_token;
+
+    if(!accessToken){
+      throw new Error("Sesi login tidak ditemukan.");
+    }
+
     const response = await fetch(
-      `${SUPABASE_URL}/functions/v1/admin-users`,
+      `${SUPABASE_URL}/functions/v1/rapid-endpoint`,
       {
         method:"POST",
         headers:{
           "Content-Type":"application/json",
-          "apikey":SUPABASE_KEY
+          "Authorization":
+            `Bearer ${accessToken}`,
+          "apikey": SUPABASE_ANON_KEY
         },
         body:JSON.stringify({
           action:"delete",
@@ -2030,7 +2037,8 @@ async function changeUserRole(userId, currentRole){
       }
     );
 
-    const result = await response.json();
+    const result =
+      await response.json();
 
     if(!response.ok){
       throw new Error(
@@ -2061,15 +2069,6 @@ async function changeUserRole(userId, currentRole){
       "error"
     );
   }
-}
-  msg(
-    "usersMsg",
-    "Role berhasil diubah menjadi " +
-    (newRole === "admin" ? "Admin." : "Member."),
-    "success"
-  );
-
-  await loadUsers();
 }
 async function toggleUserActive(userId, currentStatus){
   if(!userId) return;
