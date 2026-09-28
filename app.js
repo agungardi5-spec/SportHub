@@ -1934,6 +1934,12 @@ async function loadUsers(){
         >
           ${u.role === "admin" ? "👤 Jadikan Member" : "👑 Jadikan Admin"}
         </button>
+        <button
+  class="btn danger"
+  onclick="deleteUser('${u.id}','${esc(u.full_name || "Pengguna")}')"
+>
+  🗑️ Hapus
+</button>
       
 
 <button
@@ -1981,6 +1987,81 @@ async function changeUserRole(userId, currentRole){
     return;
   }
 
+ async function deleteUser(userId, userName){
+
+  if(!userId) return;
+
+  /* Jangan hapus akun sendiri */
+  if(
+    typeof user !== "undefined" &&
+    user &&
+    user.id === userId
+  ){
+    alert("Akun yang sedang digunakan tidak boleh dihapus.");
+    return;
+  }
+
+  const confirmed = confirm(
+    `Hapus pengguna "${userName || "Pengguna"}"?\n\n` +
+    `Akun login dan data profil pengguna akan dihapus.\n` +
+    `Tindakan ini tidak dapat dibatalkan.`
+  );
+
+  if(!confirmed) return;
+
+  try{
+
+    /*
+     * Gunakan Edge Function admin-users
+     * agar akun Auth juga ikut dihapus.
+     */
+    const response = await fetch(
+      `${SUPABASE_URL}/functions/v1/admin-users`,
+      {
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json",
+          "apikey":SUPABASE_KEY
+        },
+        body:JSON.stringify({
+          action:"delete",
+          user_id:userId
+        })
+      }
+    );
+
+    const result = await response.json();
+
+    if(!response.ok){
+      throw new Error(
+        result.error ||
+        "Gagal menghapus pengguna."
+      );
+    }
+
+    msg(
+      "usersMsg",
+      `Pengguna ${userName || ""} berhasil dihapus.`,
+      "success"
+    );
+
+    await loadUsers();
+
+  }catch(error){
+
+    console.error(
+      "Gagal menghapus pengguna:",
+      error
+    );
+
+    msg(
+      "usersMsg",
+      "Gagal menghapus pengguna: " +
+      error.message,
+      "error"
+    );
+  }
+}
   msg(
     "usersMsg",
     "Role berhasil diubah menjadi " +
