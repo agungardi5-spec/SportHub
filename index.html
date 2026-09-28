@@ -1530,13 +1530,22 @@ if(summary){
       const joined=new Map(
         registrations.map(r=>[r.event_id,r])
       );
+      const now = new Date();
+
+const upcomingEvents = (events || []).filter(e => {
+  const eventDateTime = new Date(
+    `${e.event_date}T${String(e.event_time).slice(0,5)}:00`
+  );
+
+  return eventDateTime > now;
+});
 
       if(!events || events.length===0){
         list.innerHTML='<div class="member-empty">Belum ada jadwal olahraga.</div>';
         return;
       }
 
-      list.innerHTML=events.slice(0,4).map(e=>{
+      list.innerHTML=upcomingEvents.slice(0,4).map(e=>{
 
         const reg=joined.get(e.id);
         const isJoined=!!reg;
