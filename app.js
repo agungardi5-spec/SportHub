@@ -159,7 +159,7 @@ async function loadProfile(u){
 
   await loadMember();
 
-await requestNotificationPermission();
+await enablePushNotifications();
 
 showBrowserNotification(
   "TITIK KUMPUL",
