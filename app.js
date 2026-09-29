@@ -1,4 +1,121 @@
 const {createClient}=supabase; const db=createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+// ================= PUSH NOTIFICATION =================
+
+function urlBase64ToUint8Array(base64String){
+
+  const padding =
+    "=".repeat((4 - base64String.length % 4) % 4);
+
+  const base64 =
+    (base64String + padding)
+      .replace(/-/g, "+")
+      .replace(/_/g, "/");
+
+  const rawData =
+    atob(base64);
+
+  return Uint8Array.from(
+    [...rawData].map(
+      char => char.charCodeAt(0)
+    )
+  );
+}
+
+
+async function enablePushNotifications(){
+
+  try{
+
+    if(
+      !("serviceWorker" in navigator) ||
+      !("PushManager" in window)
+    ){
+      console.log("Push notification tidak didukung.");
+      return;
+    }
+
+    const permission =
+      await Notification.requestPermission();
+
+    if(permission !== "granted"){
+      console.log("Izin notifikasi ditolak.");
+      return;
+    }
+
+    const registration =
+      await navigator.serviceWorker.ready;
+
+    let subscription =
+      await registration.pushManager.getSubscription();
+
+    if(!subscription){
+
+      subscription =
+        await registration.pushManager.subscribe({
+
+          userVisibleOnly:true,
+
+          applicationServerKey:
+            urlBase64ToUint8Array(
+              VAPID_PUBLIC_KEY
+            )
+
+        });
+
+    }
+
+    if(!user){
+      console.log("User belum tersedia.");
+      return;
+    }
+
+    const subscriptionData =
+      subscription.toJSON();
+
+    await db
+      .from("push_subscriptions")
+      .delete()
+      .eq("endpoint", subscription.endpoint);
+
+    const {error} =
+      await db
+        .from("push_subscriptions")
+        .insert({
+
+          user_id:user.id,
+
+          endpoint:
+            subscription.endpoint,
+
+          subscription:
+            subscriptionData
+
+        });
+
+    if(error){
+
+      console.error(
+        "Gagal menyimpan push subscription:",
+        error
+      );
+
+      return;
+    }
+
+    console.log(
+      "Push notification berhasil diaktifkan."
+    );
+
+  }catch(error){
+
+    console.error(
+      "Push notification error:",
+      error
+    );
+
+  }
+
+}
 let user=null, profile=null, memberTab="available";
 let adminView="dashboard";
 const $=id=>document.getElementById(id);
