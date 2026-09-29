@@ -1421,18 +1421,34 @@ list.innerHTML=regs.map((r,index)=>{
           : "⏳ Belum Bayar"
         }
       </td>
-      <td>
+     <td>
   ${
-    r.payment_status === "paid"
-      ? "—"
-      : `<button
+    r.payment_status !== "paid"
+      ? `<button
            class="btn primary"
            type="button"
            onclick="markPaymentPaid('${r.id}')"
          >
            ✅ Tandai Lunas
          </button>`
+      : ""
   }
+
+  <button
+    class="btn light"
+    type="button"
+    onclick="editPayment('${r.id}', '${r.payment_status}')"
+  >
+    ✏️ Edit
+  </button>
+
+  <button
+    class="btn danger"
+    type="button"
+    onclick="deletePayment('${r.id}')"
+  >
+    🗑️ Hapus
+  </button>
 </td>
     </tr>
   `;
@@ -1470,6 +1486,39 @@ async function markPaymentPaid(registrationId){
   }
 
   alert("Pembayaran berhasil ditandai lunas.");
+
+  loadPayments();
+}
+// ================= HAPUS PEMBAYARAN =================
+
+async function deletePayment(registrationId){
+
+  if(!registrationId) return;
+
+  const confirmed = confirm(
+    "Hapus data pembayaran ini?\n\n" +
+    "Data pendaftaran dan pembayaran akan dihapus.\n" +
+    "Tindakan ini tidak dapat dibatalkan."
+  );
+
+  if(!confirmed) return;
+
+  const { error } = await db
+    .from("registrations")
+    .delete()
+    .eq("id", registrationId);
+
+  if(error){
+
+    alert(
+      "Gagal menghapus pembayaran: " +
+      error.message
+    );
+
+    return;
+  }
+
+  alert("Data pembayaran berhasil dihapus.");
 
   loadPayments();
 }
