@@ -1,3 +1,3 @@
 const SUPABASE_URL="https://nxnmfzoezradkyyzinwq.supabase.co";
 const SUPABASE_ANON_KEY="sb_publishable_cTErLnxu32KvGJeSLgwmag_R19PA484";
-const VAPID_PUBLIC_KEY = "BIlL2Awe4CVe1ZANdq1BH4xidC5pnCm7RBfoQOk0joV9fN2CXAcMNzOtvYfuCFLScHUDwRKynfU3KigB6fZzFKE";
+const VAPID_PUBLIC_KEY = "BPTSMz5B6ZQ9FUsls_SEpxo93PTbWr3ihaDlccDhh73jO_174SGuehJxWs1YCDmeTjFH2iyh8iLc7bIZ7KHGU48";
