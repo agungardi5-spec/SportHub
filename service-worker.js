@@ -60,3 +60,90 @@ self.addEventListener("fetch", event => {
   );
 
 });
+// ================= PUSH NOTIFICATION =================
+
+self.addEventListener("push", event => {
+
+  let data = {};
+
+  try {
+    data = event.data ? event.data.json() : {};
+  } catch (e) {
+    data = {};
+  }
+
+  const title =
+    data.title || "🔔 Titik Kumpul";
+
+  const options = {
+    body:
+      data.body || "Ada notifikasi baru.",
+    icon: "./icon-192.png",
+    badge: "./icon-192.png",
+    data: {
+      url:
+        data.url || "./index.html"
+    }
+  };
+
+  event.waitUntil(
+    self.registration.showNotification(
+      title,
+      options
+    )
+  );
+
+});
+
+// ===================== PUSH NOTIFICATION =====================
+
+self.addEventListener("push", event => {
+
+  let data = {};
+
+  try {
+    data = event.data ? event.data.json() : {};
+  } catch (e) {
+    data = {};
+  }
+
+  const title =
+    data.title || "🔔 Titik Kumpul";
+
+  const options = {
+    body:
+      data.body || "Ada notifikasi baru.",
+    icon: "./icon-192.png",
+    badge: "./icon-192.png",
+    data: {
+      url:
+        data.url || "./index.html"
+    }
+  };
+
+  event.waitUntil(
+    self.registration.showNotification(
+      title,
+      options
+    )
+  );
+
+});
+// ================= KLIK NOTIFIKASI =================
+
+self.addEventListener(
+  "notificationclick",
+  event => {
+
+    event.notification.close();
+
+    const url =
+      event.notification?.data?.url ||
+      "./index.html";
+
+    event.waitUntil(
+      clients.openWindow(url)
+    );
+
+  }
+);
