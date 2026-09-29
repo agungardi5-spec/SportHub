@@ -1522,6 +1522,49 @@ async function deletePayment(registrationId){
 
   loadPayments();
 }
+// ================= EDIT PEMBAYARAN =================
+
+async function editPayment(registrationId, currentStatus){
+
+  if(!registrationId) return;
+
+  const newStatus =
+    currentStatus === "paid"
+      ? "pending"
+      : "paid";
+
+  const label =
+    newStatus === "paid"
+      ? "Sudah Bayar"
+      : "Belum Bayar";
+
+  const confirmed = confirm(
+    `Ubah status pembayaran menjadi "${label}"?`
+  );
+
+  if(!confirmed) return;
+
+  const { error } = await db
+    .from("registrations")
+    .update({
+      payment_status: newStatus
+    })
+    .eq("id", registrationId);
+
+  if(error){
+
+    alert(
+      "Gagal mengubah pembayaran: " +
+      error.message
+    );
+
+    return;
+  }
+
+  alert("Status pembayaran berhasil diubah.");
+
+  loadPayments();
+}
 // ================= LAPORAN =================
 
 async function loadReport(){
